@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.8" tiledversion="1.8.6" orientation="orthogonal" renderorder="right-down" width="9" height="9" tilewidth="64" tileheight="64" infinite="0" nextlayerid="3" nextobjectid="4">
+ <tileset firstgid="1" source="chao.tsx"/>
+ <tileset firstgid="2" source="menu1.tsx"/>
+ <layer id="1" name="Camada de Tiles 1" width="9" height="9">
+  <data encoding="csv">
+2,3,4,5,6,7,8,9,10,
+11,12,13,14,15,16,17,18,19,
+20,21,22,23,24,25,26,27,28,
+29,30,31,32,33,34,35,36,37,
+47,48,49,50,51,52,53,54,55,
+56,57,58,59,60,61,62,63,64,
+65,66,67,68,69,70,71,72,73,
+74,75,76,77,78,79,80,81,82,
+83,84,85,86,87,88,89,90,91
+</data>
+ </layer>
+ <objectgroup id="2" name="Botoes">
+  <object id="1" x="230" y="276" width="147" height="63"/>
+  <object id="2" x="230" y="362" width="149" height="65"/>
+ </objectgroup>
+</map>
