@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.mygdx.game.Screens.Renderizador;
 
 public class Builder extends ApplicationAdapter{

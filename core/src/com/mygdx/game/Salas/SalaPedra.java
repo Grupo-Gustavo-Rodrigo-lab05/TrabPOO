@@ -1,5 +1,6 @@
 package com.mygdx.game.Salas;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.Efeito;
 
 public class SalaPedra extends SalaCaminho{
@@ -7,8 +8,7 @@ public class SalaPedra extends SalaCaminho{
 
     public SalaPedra(int x, int y) {
         super(x, y);
-
-        char tipo = 'P';
+        tipo = 'P';
     }
 
     public void recebeDano(int dano) {
@@ -31,5 +31,11 @@ public class SalaPedra extends SalaCaminho{
                 efeitos[i] = efeito;
             }
         }
+    }
+    public void setRec(Rectangle rec){}
+
+    @Override
+    public Rectangle getRec() {
+        return null;
     }
 }
