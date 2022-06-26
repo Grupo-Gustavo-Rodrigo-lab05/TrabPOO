@@ -2,7 +2,7 @@ package com.mygdx.game.Salas;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.Efeito;
+import com.mygdx.game.Efeito.Efeito;
 import com.mygdx.game.Inimigos.Inimigo;
 import com.mygdx.game.Torre.Torre;
 

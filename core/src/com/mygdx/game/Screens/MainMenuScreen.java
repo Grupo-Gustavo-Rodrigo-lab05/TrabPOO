@@ -23,6 +23,8 @@ public class MainMenuScreen implements Screen {
         Vector3 touchPosition;
         private final Renderizador game;
         public Mapa mapa;
+        public static GameScreen telaJogo;
+
         public MainMenuScreen(final Renderizador game, Mapa mapa){
                 this.game = game;
                 this.mapa = mapa;
@@ -59,8 +61,9 @@ public class MainMenuScreen implements Screen {
                                 touchPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
                                 this.camera.unproject(touchPosition);
                         }
-                        if(rec.contains(touchPosition.x, touchPosition.y)){
-                                game.setScreen(new GameScreen(game, mapa));
+                        if(rec.contains(touchPosition.x, touchPosition.y)) {
+                                telaJogo = new GameScreen(game, mapa);
+                                game.setScreen(telaJogo);
                         }
                 }
         }

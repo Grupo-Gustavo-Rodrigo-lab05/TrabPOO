@@ -1,5 +1,6 @@
 package com.mygdx.game.Screens;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Gdx;
@@ -7,36 +8,24 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.CircleMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.*;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.Inimigos.Inimigo;
 import com.mygdx.game.Inimigos.InimigoZumbi;
 import com.mygdx.game.Mapa;
-import com.mygdx.game.Salas.SalaCaminho;
-import com.mygdx.game.Salas.SalaPedra;
-import com.mygdx.game.Salas.SalaTorre;
-import com.mygdx.game.Torre.TorreVazia;
 
 import java.util.Iterator;
-import java.util.Objects;
 
 public class GameScreen  implements Screen, InputProcessor {
-    Texture img;
+    Texture enemyImg, pauseImg;
     TiledMap tiledMap;
     OrthographicCamera camera;
     TiledMapRenderer tiledMapRenderer;
@@ -47,10 +36,16 @@ public class GameScreen  implements Screen, InputProcessor {
     Vector3 touchPosition;
     private Array<Inimigo> enemies;
     private long lastDropTime;
+    private static boolean paused;
+    private long instantPaused;
+    private long timePausedDelay;
+    public static boolean fechouMercado;
+
     public GameScreen(final Renderizador game, Mapa mapa){
         this.game = game;
         this.mapa = mapa;
-        img = new Texture("inimigo1.png");
+        enemyImg = new Texture("inimigo1.png");
+        pauseImg = new Texture("Pause.png");
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
         camera = new OrthographicCamera();
@@ -63,6 +58,7 @@ public class GameScreen  implements Screen, InputProcessor {
         Gdx.input.setInputProcessor(this);
         enemies = new Array<Inimigo>();
         spawnEnemies();
+
         int contador = 0;
         if(contador == 0){
             ligaSalas();
@@ -119,16 +115,50 @@ public class GameScreen  implements Screen, InputProcessor {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
-        //Coloca as texturas das torres nos seus respectivos retangulos e gera os efeitos das torres nas casas ao redor//
+        //Desenha as torres
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (mapa.getSalas(i, j).getTipo() == 'T') {
+                    mapa.getSalas(i, j).getTorre().create();
+                    batch.draw(mapa.getSalas(i, j).getTorre().imagemTorre(), mapa.getSalas(i, j).getRec().x, mapa.getSalas(i, j).getRec().y);
+                }
+            }
+        }
+
+        //Desenha os inimigos
+        for (Inimigo enemie : enemies) {
+            batch.draw(enemyImg, enemie.getRec().x, enemie.getRec().y);
+        }
+
+        if(paused) {
+            batch.draw(pauseImg, 512, 512);
+            if(Gdx.input.isKeyJustPressed(Input.Keys.P) || fechouMercado) {
+                timePausedDelay = TimeUtils.nanoTime() - instantPaused;
+                paused = false;
+                fechouMercado = false;
+            }
+        } else {
+            generalUpdate();
+        }
+
+        batch.end();
+    }
+
+    public void generalUpdate() {
+        //Pausa o jogo
+        if(Gdx.input.isKeyJustPressed(Input.Keys.P)) {
+            instantPaused = TimeUtils.nanoTime();
+            paused = true;
+        }
+
+        //Gera os efeitos das torres nas casas ao redor
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 5; j++) {
                 if(mapa.getSalas(i, j).getTipo() == 'T') {
-                    mapa.getSalas(i, j).getTorre().create();
-                    batch.draw(mapa.getSalas(i, j).getTorre().imagemTorre(), mapa.getSalas(i, j).getRec().x, mapa.getSalas(i, j).getRec().y);
                     if (mapa.getSalas(i, j).getTorre().TorreTipo() != 'V') {
                         for (int m = -1; m <= 1; m++) {
                             for (int z = -1; z <= 1; z++) {
-                                if (mapa.getSalas(i + m, j + z).getTipo() == 'C' && m != z && m != -z) {
+                                if (mapa.getSalas(i + m, j + z).getTipo() == 'C' && Math.abs(m) != Math.abs(z)) {
                                     mapa.getSalas(i + m, j + z).adicionaEfeito(mapa.getSalas(i, j).getTorre().getEfeitoTorre());
                                     batch.draw(mapa.getSalas(i, j).getTorre().getEfeitoTorre().getImagemEfeito(), mapa.getSalas(i + m, j + z).getRec().x, mapa.getSalas(i + m, j + z).getRec().y);
                                 }
@@ -140,21 +170,24 @@ public class GameScreen  implements Screen, InputProcessor {
                         this.camera.unproject(touchPosition);
                     }
                     if (mapa.getSalas(i, j).getRec().contains(touchPosition.x, touchPosition.y)) {
-                        game.setScreen(new Mercado(game, mapa, i, j));
+                        instantPaused = TimeUtils.nanoTime();
+                        paused = true;
+                        game.setScreen(new MercadoScreen(game, mapa, i, j));
+                        touchPosition.set(0, 0, 0);
                     }
                 }
             }
         }
-        //Spawn de inimigos//
-        for (Inimigo enemie : enemies) {
-            batch.draw(img, enemie.getRec().x, enemie.getRec().y);
-        }
-        batch.end();
-        if (TimeUtils.nanoTime() - lastDropTime > 1000000000)
+
+        //Spawn de inimigos
+        if ((TimeUtils.nanoTime() - timePausedDelay) - lastDropTime > 1000000000) {
             spawnEnemies();
+            timePausedDelay = 0;
+        }
+
         for (Iterator<Inimigo> it = enemies.iterator(); it.hasNext(); ) {
             Inimigo enemie = it.next();
-            //Fazer inimigo tomando dano//
+            //Fazer inimigo tomando dano
             if(enemie.getRec().y > 449)
                 enemie.getRec().y -= 200 * Gdx.graphics.getDeltaTime();
             else if(enemie.getRec().x > 127 && enemie.getRec().y > 321){
@@ -180,22 +213,21 @@ public class GameScreen  implements Screen, InputProcessor {
             }
         }
 
-        //Ver em qual sala esta cada inimigo//
+        //Ver em qual sala esta cada inimigo
 //        for (int linha = 0; linha < 7; linha ++) {
 //            for (int coluna = 0; coluna < 5; coluna++){
 //                if(mapa.getSalas(linha, coluna).getTipo() == 'C') {
-//                    for (Iterator<Inimigo> it = enemies.iterator(); it.hasNext(); ) {
+//                    for (Iterator<Inimigo> it = enemies.iterator(); it.hasNext();) {
 //                        Inimigo enemie = it.next();
 //                        if (mapa.getSalas(linha, coluna).getRec().contains(enemie.getRec().x, enemie.getRec().y)) {
 //                            mapa.getSalas(linha, coluna).addInimigo(enemie);
-//
 //                        }
-//
 //                    }
 //                }
 //            }
 //        }
-        //Verifica se o mercado ou o invetário foi aberto//
+
+        //Verifica se o mercado ou o inventário foi aberto
         for (MapObject object : tiledMap.getLayers().get("telas").getObjects()) {
             Rectangle rec = ((RectangleMapObject) object).getRectangle();
             if(Gdx.input.justTouched()){
@@ -203,7 +235,18 @@ public class GameScreen  implements Screen, InputProcessor {
                 this.camera.unproject(touchPosition);
             }
             if(rec.contains(touchPosition.x, touchPosition.y)){
-                game.setScreen(new Mercado(game, mapa, 0 ,0));
+                instantPaused = TimeUtils.nanoTime();
+                paused = true;
+                game.setScreen(new MercadoScreen(game, mapa, 0 ,0));
+                touchPosition.set(0, 0, 0);
+            }
+        }
+
+        //Termina o jogo se um inimigo chegou no tesouro
+        for (Iterator<Inimigo> it = enemies.iterator(); it.hasNext();) {
+            Inimigo enemie = it.next();
+            if(enemie.getRec().y < 130 && enemie.getRec().x > 380) {
+                System.exit(0);
             }
         }
     }

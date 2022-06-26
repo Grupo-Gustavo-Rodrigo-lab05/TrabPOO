@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class InimigoZumbi extends Inimigo{
 
-    public void create(){
+    public void create() {
         imagemInimigo = new Texture("inimigo1.png");
     }
 }

@@ -2,7 +2,9 @@ package com.mygdx.game.Torre;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.game.Efeito;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.mygdx.game.Efeito.Efeito;
+import javafx.animation.Animation;
 
 public abstract class Torre extends ApplicationAdapter implements TorreInterface {
     int x;

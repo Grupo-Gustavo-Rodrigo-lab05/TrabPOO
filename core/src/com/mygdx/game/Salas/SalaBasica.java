@@ -1,13 +1,14 @@
 package com.mygdx.game.Salas;
 
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.Efeito;
+import com.mygdx.game.Efeito.Efeito;
 
 //Interface contendo todas as funções basicas de uma sala//
 public abstract class SalaBasica implements Sala {
     protected int x, y;
     protected char tipo;
     private Rectangle salaFront;
+
     public int getX() {
         return x;
     }

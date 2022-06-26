@@ -1,5 +1,6 @@
 package com.mygdx.game.Screens;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -16,11 +17,11 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.Mapa;
 import com.mygdx.game.Torre.TorreFogo;
+import com.mygdx.game.Torre.TorreGelo;
 import com.mygdx.game.Torre.TorreRaio;
+import sun.util.resources.cldr.es.CalendarData_es_GQ;
 
-import java.awt.*;
-
-public class Mercado implements Screen {
+public class MercadoScreen implements Screen {
 
     TiledMap tiledMap;
     Mapa mapa;
@@ -37,7 +38,7 @@ public class Mercado implements Screen {
     Rectangle botao3;
     Rectangle botao4;
     Rectangle sairButton;
-    public Mercado(final Renderizador game, Mapa mapa, int x, int y){
+    public MercadoScreen(final Renderizador game, Mapa mapa, int x, int y){
         this.game = game;
         this.mapa = mapa;
         this.x = x;
@@ -94,15 +95,23 @@ public class Mercado implements Screen {
             this.camera.unproject(touchPosition);
         }
         if(sairButton.contains(touchPosition.x, touchPosition.y)){
-            game.setScreen(new GameScreen(game, mapa));
+            GameScreen.fechouMercado = true;
+            game.setScreen(MainMenuScreen.telaJogo);
         }
         if(botao1.contains(touchPosition.x, touchPosition.y)){
             mapa.getSalas(x, y).setTorre(new TorreFogo(x, y));
-            game.setScreen(new GameScreen(game, mapa));
+            GameScreen.fechouMercado = true;
+            game.setScreen(MainMenuScreen.telaJogo);
         }
         if(botao2.contains(touchPosition.x, touchPosition.y)){
             mapa.getSalas(x, y).setTorre(new TorreRaio(x, y));
-            game.setScreen(new GameScreen(game, mapa));
+            GameScreen.fechouMercado = true;
+            game.setScreen(MainMenuScreen.telaJogo);
+        }
+        if(botao3.contains(touchPosition.x, touchPosition.y)){
+            mapa.getSalas(x, y).setTorre(new TorreGelo(x, y));
+            GameScreen.fechouMercado = true;
+            game.setScreen(MainMenuScreen.telaJogo);
         }
 
     }

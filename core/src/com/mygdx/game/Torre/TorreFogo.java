@@ -2,13 +2,14 @@ package com.mygdx.game.Torre;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.game.Efeito;
-import com.mygdx.game.Torre.Torre;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.mygdx.game.Efeito.EfeitoFogo;
 
 public class TorreFogo extends Torre {
     public TorreFogo(int x, int y){
         super(x, y);
-        efeito = new Efeito();
+        tipo = 'F';
+        efeito = new EfeitoFogo();
     }
 
     @Override

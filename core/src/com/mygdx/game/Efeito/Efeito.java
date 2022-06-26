@@ -1,19 +1,13 @@
-package com.mygdx.game;
+package com.mygdx.game.Efeito;
 
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.Texture;
 
 public class Efeito extends ApplicationAdapter {
-    private int id;
-    private float dano;
-    private Texture imagemEfeito;
-
-    public Efeito(){
-        dano = 200;
-        create();
-        id = 1;
-    }
+    protected float dano;
+    protected Texture imagemEfeito;
+    protected int id;
 
     public int getId() {
         return this.id;
@@ -26,7 +20,5 @@ public class Efeito extends ApplicationAdapter {
     public Texture getImagemEfeito(){
         return imagemEfeito;
     }
-    public void create(){
-        imagemEfeito = new Texture("EfeitoFogo.png");
-    }
+
 }
