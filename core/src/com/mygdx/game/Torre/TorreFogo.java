@@ -1,11 +1,10 @@
 package com.mygdx.game.Torre;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.mygdx.game.Efeito.EfeitoFogo;
 
-public class TorreFogo extends Torre {
+//Torre do elemento Fogo
+public class TorreFogo extends TorreBasica {
     public TorreFogo(int x, int y){
         super(x, y);
         tipo = 'F';
@@ -14,9 +13,7 @@ public class TorreFogo extends Torre {
     }
 
     @Override
-    public void create(){
+    public void create() {
         imagemTorre = new Texture("TorreFogo.png");
     }
-
-
 }

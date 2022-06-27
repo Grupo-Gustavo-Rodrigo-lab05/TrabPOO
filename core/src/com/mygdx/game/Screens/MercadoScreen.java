@@ -21,29 +21,25 @@ import com.mygdx.game.Torre.TorreGelo;
 import com.mygdx.game.Torre.TorrePedra;
 
 public class MercadoScreen implements Screen {
-
-    TiledMap tiledMap;
-    Mapa mapa;
-    OrthographicCamera camera;
-    TiledMapRenderer tiledMapRenderer;
-    Vector3 touchPosition;
-    private SpriteBatch batch;
     private final Renderizador game;
-    Texture imgComprar;
+    public Mapa mapa;
+    private TiledMap tiledMap;
+    private OrthographicCamera camera;
+    private TiledMapRenderer tiledMapRenderer;
+    private Vector3 touchPosition;
+    private SpriteBatch batch;
+    private Texture imgComprar;
     int x;
     int y;
-    Rectangle botao1;
-    Rectangle botao2;
-    Rectangle botao3;
-    Rectangle botao4;
-    Rectangle sairButton;
-    public MercadoScreen(final Renderizador game, Mapa mapa, int x, int y){
+    Rectangle botao1, botao2, botao3, botao4, sairButton;
+
+    public MercadoScreen(final Renderizador game, Mapa mapa, int x, int y) {
         this.game = game;
         this.mapa = mapa;
         this.x = x;
         this.y = y;
 
-        //Inicializa mapa e camera//
+        //Inicializa mapa e câmera
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
         imgComprar = new Texture("BotaoComprar.png");
@@ -53,7 +49,7 @@ public class MercadoScreen implements Screen {
         camera.update();
         tiledMap = new TmxMapLoader().load("Mercado.tmx");
 
-        //Inicializa botoes do menu mercado//
+        //Inicializa botões do menu mercado
         botao1 = ((RectangleMapObject) tiledMap.getLayers().get("botoes").getObjects().get("botao1")).getRectangle();
         botao2 = ((RectangleMapObject) tiledMap.getLayers().get("botoes").getObjects().get("botao2")).getRectangle();
         botao3 = ((RectangleMapObject) tiledMap.getLayers().get("botoes").getObjects().get("botao3")).getRectangle();
@@ -62,15 +58,12 @@ public class MercadoScreen implements Screen {
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         batch = new SpriteBatch();
     }
-    @Override
-    public void show() {
 
-    }
-    private void removeEfeito(){
+    private void removeEfeito() {
         for (int m = -1; m <= 1; m++) {
             for (int z = -1; z <= 1; z++) {
                 if (mapa.getSalas(x + m, y + z).getTipo() == 'C') {
-                    mapa.getSalas(x+m, y+z).retiraEfeito(mapa.getSalas(x, y).getTorre().getEfeitoTorre());
+                    mapa.getSalas(x+m, y+z).removeEfeito(mapa.getSalas(x, y).getTorre().getEfeitoTorre());
                 }
             }
         }
@@ -78,8 +71,7 @@ public class MercadoScreen implements Screen {
 
     @Override
     public void render(float delta) {
-
-        //Renderiza o TiledMap//
+        //Renderiza o TiledMap
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -90,75 +82,68 @@ public class MercadoScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
-        //Renderiza os botoes de comprar
+        //Renderiza os botões de comprar
         for (MapObject object : tiledMap.getLayers().get("botoes").getObjects()) {
             Rectangle rec1 = ((RectangleMapObject) object).getRectangle();
             batch.draw(imgComprar, rec1.x, rec1.y);
         }
         batch.end();
         GameScreen.resetTouchPosition();
-        //Verifica qual torre foi comprada e troca ela na SalaTorre//
-        if(Gdx.input.justTouched()){
+
+        //Verifica qual torre foi comprada e coloca ela na SalaTorre
+        if (Gdx.input.justTouched()){
             touchPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             this.camera.unproject(touchPosition);
         }
-        if(sairButton.contains(touchPosition.x, touchPosition.y)){
+        if (sairButton.contains(touchPosition.x, touchPosition.y)) {
             GameScreen.fechouMercado = true;
             game.setScreen(MainMenuScreen.getTelaJogo());
         }
-        if(botao1.contains(touchPosition.x, touchPosition.y) && MainMenuScreen.getTelaJogo().getOuro() >= 20){
+        if (botao1.contains(touchPosition.x, touchPosition.y) && MainMenuScreen.getTelaJogo().getOuro() >= 20) {
             removeEfeito();
             mapa.getSalas(x, y).setTorre(new TorreFogo(x, y));
             MainMenuScreen.getTelaJogo().gastaOuro(20);
             GameScreen.fechouMercado = true;
             game.setScreen(MainMenuScreen.getTelaJogo());
         }
-        if(botao2.contains(touchPosition.x, touchPosition.y) && MainMenuScreen.getTelaJogo().getOuro() >= 20){
+        if (botao2.contains(touchPosition.x, touchPosition.y) && MainMenuScreen.getTelaJogo().getOuro() >= 20) {
             removeEfeito();
             mapa.getSalas(x, y).setTorre(new TorrePedra(x, y));
             MainMenuScreen.getTelaJogo().gastaOuro(20);
             GameScreen.fechouMercado = true;
             game.setScreen(MainMenuScreen.getTelaJogo());
         }
-        if(botao3.contains(touchPosition.x, touchPosition.y) && MainMenuScreen.getTelaJogo().getOuro() >= 20){
+        if (botao3.contains(touchPosition.x, touchPosition.y) && MainMenuScreen.getTelaJogo().getOuro() >= 20) {
             removeEfeito();
             mapa.getSalas(x, y).setTorre(new TorreGelo(x, y));
             MainMenuScreen.getTelaJogo().gastaOuro(20);
             GameScreen.fechouMercado = true;
             game.setScreen(MainMenuScreen.getTelaJogo());
         }
-        if(botao4.contains(touchPosition.x, touchPosition.y) && MainMenuScreen.getTelaJogo().getOuro() >= 20){
+        if (botao4.contains(touchPosition.x, touchPosition.y) && MainMenuScreen.getTelaJogo().getOuro() >= 20) {
             removeEfeito();
             mapa.getSalas(x, y).setTorre(new TorreAreia(x, y));
             MainMenuScreen.getTelaJogo().gastaOuro(20);
             GameScreen.fechouMercado = true;
             game.setScreen(MainMenuScreen.getTelaJogo());
         }
-
     }
 
     @Override
-    public void resize(int width, int height) {
-
-    }
+    public void show() { }
 
     @Override
-    public void pause() {
-
-    }
+    public void resize(int width, int height) { }
 
     @Override
-    public void resume() {
-
-    }
+    public void pause() { }
 
     @Override
-    public void hide() {
-
-    }
+    public void resume() { }
 
     @Override
-    public void dispose() {
+    public void hide() { }
 
-    }
+    @Override
+    public void dispose() { }
 }

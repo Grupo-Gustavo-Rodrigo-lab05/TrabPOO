@@ -21,22 +21,20 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.Inimigos.*;
 import com.mygdx.game.Mapa;
-import com.mygdx.game.Torre.TorreVazia;
-
 import java.util.Iterator;
 
-public class GameScreen  implements Screen, InputProcessor {
-    Texture pauseImg;
+public class GameScreen implements Screen, InputProcessor {
+    private Texture pauseImg;
     private int ouro;
-    TiledMap tiledMap;
-    OrthographicCamera camera;
-    TiledMapRenderer tiledMapRenderer;
+    private TiledMap tiledMap;
+    private OrthographicCamera camera;
+    private TiledMapRenderer tiledMapRenderer;
     private final Renderizador game;
     private SpriteBatch batch;
     public Mapa mapa;
-    FitViewport viewport;
+    private FitViewport viewport;
     private static Vector3 touchPosition;
-    private Array<Inimigo> enemies;
+    private Array<InimigoBasico> enemies;
     private long lastDropTime;
     private static boolean paused;
     private long instantPaused;
@@ -47,7 +45,7 @@ public class GameScreen  implements Screen, InputProcessor {
     private int ondasI;
     private int ondasJ;
 
-    public GameScreen(final Renderizador game, Mapa mapa){
+    public GameScreen(final Renderizador game, Mapa mapa) {
         this.game = game;
         this.mapa = mapa;
         float w = Gdx.graphics.getWidth();
@@ -61,11 +59,12 @@ public class GameScreen  implements Screen, InputProcessor {
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         touchPosition = new Vector3();
         Gdx.input.setInputProcessor(this);
-        enemies = new Array<Inimigo>();
+        enemies = new Array<InimigoBasico>();
         fonte = new BitmapFont();
         fonte.setColor(0, 0, 0, 1);
         ouro = 20;
 
+        //Organiza as ondas de inimigos
         ondasI = 0;
         ondasJ = 0;
         ondas = new char[][] {{'F', 'F', 'F', 'F', 'F'},
@@ -80,11 +79,7 @@ public class GameScreen  implements Screen, InputProcessor {
                               {'O', 'A', 'O', 'A', 'F', 'M', 'F', 'M', 'O', 'O', 'A', 'A', 'E'}}; //Segundo Boss 'Esqueleto'
 
         spawnEnemies();
-        int contador = 0;
-        if(contador == 0){
-            ligaSalas();
-            contador++;
-        }
+        ligaSalas();
     }
 
     public int getOuro() {
@@ -100,7 +95,6 @@ public class GameScreen  implements Screen, InputProcessor {
     }
 
     public void ligaSalas() {
-        //ARRUMAR ESSA LOGICA//
         String linha;
         String coluna;
         for(int i = 0; i < 7; i++) {
@@ -130,34 +124,28 @@ public class GameScreen  implements Screen, InputProcessor {
         }
     }
 
-    public void spawnEnemies(){
+    public void spawnEnemies() {
         if (ondasI < 10) {
             for (MapObject object : tiledMap.getLayers().get("Spawn").getObjects()) {
                 Rectangle Spawn = ((RectangleMapObject) object).getRectangle();
-                Inimigo enemy;
-                if (ondas[ondasI][ondasJ] == 'F') {
+                InimigoBasico enemy;
+                if (ondas[ondasI][ondasJ] == 'F')
                     enemy = new InimigoFaca();
-                    incrementaOndas();
-                } else if (ondas[ondasI][ondasJ] == 'M') {
+                else if (ondas[ondasI][ondasJ] == 'M')
                     enemy = new InimigoMorcego();
-                    incrementaOndas();
-                } else if (ondas[ondasI][ondasJ] == 'A') {
+                else if (ondas[ondasI][ondasJ] == 'A')
                     enemy = new InimigoArmadura();
-                    incrementaOndas();
-                } else if (ondas[ondasI][ondasJ] == 'O') {
+                else if (ondas[ondasI][ondasJ] == 'O')
                     enemy = new InimigoOgro();
-                    incrementaOndas();
-                } else if (ondas[ondasI][ondasJ] == 'G') {
+                else if (ondas[ondasI][ondasJ] == 'G')
                     enemy = new InimigoGolem();
-                    incrementaOndas();
-                } else {
+                else
                     enemy = new InimigoEsqueleto();
-                    incrementaOndas();
-                }
+                incrementaOndas();
                 enemy.setRec(Spawn.x, Spawn.y);
                 enemies.add(enemy);
                 lastDropTime = TimeUtils.nanoTime();
-                mapa.getSalas(0, 4).addInimigo(enemy);
+                mapa.getSalas(0, 4).adicionaInimigo(enemy);
             }
         }
     }
@@ -168,7 +156,7 @@ public class GameScreen  implements Screen, InputProcessor {
     }
 
     @Override
-    public void render (float delta) {
+    public void render(float delta) {
         //Limpa a tela e realiza update na câmera
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
@@ -183,15 +171,15 @@ public class GameScreen  implements Screen, InputProcessor {
         //Desenha as torres
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 5; j++) {
-                if (mapa.getSalas(i, j).getTipo() == 'T' && mapa.getSalas(i, j).getTorre().TorreTipo() != 'V') {
-                    batch.draw(mapa.getSalas(i, j).getTorre().imagemTorre(), mapa.getSalas(i, j).getRec().x, mapa.getSalas(i, j).getRec().y);
+                if (mapa.getSalas(i, j).getTipo() == 'T' && mapa.getSalas(i, j).getTorre().getTorreTipo() != 'V') {
+                    batch.draw(mapa.getSalas(i, j).getTorre().getImagemTorre(), mapa.getSalas(i, j).getRec().x, mapa.getSalas(i, j).getRec().y);
                 }
             }
         }
 
         //Desenha os inimigos
-        for (Inimigo enemy : enemies) {
-            batch.draw(enemy.imagemInimigo(), enemy.getRec().x, enemy.getRec().y);
+        for (InimigoBasico enemy : enemies) {
+            batch.draw(enemy.getImagemInimigo(), enemy.getRec().x, enemy.getRec().y);
         }
 
         //Desenha o ouro
@@ -219,7 +207,7 @@ public class GameScreen  implements Screen, InputProcessor {
 
     public void generalUpdate() {
         //Pausa o jogo quando o usuário aperta 'P'
-        if(Gdx.input.isKeyJustPressed(Input.Keys.P)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
             instantPaused = TimeUtils.nanoTime();
             paused = true;
         }
@@ -228,7 +216,7 @@ public class GameScreen  implements Screen, InputProcessor {
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 5; j++) {
                 if(mapa.getSalas(i, j).getTipo() == 'T') {
-                    if (mapa.getSalas(i, j).getTorre().TorreTipo() != 'V') {
+                    if (mapa.getSalas(i, j).getTorre().getTorreTipo() != 'V') {
                         for (int m = -1; m <= 1; m++) {
                             for (int z = -1; z <= 1; z++) {
                                 if (mapa.getSalas(i + m, j + z).getTipo() == 'C' && Math.abs(m) != Math.abs(z)) {
@@ -261,38 +249,38 @@ public class GameScreen  implements Screen, InputProcessor {
         }
 
         //Faz inimigos andarem
-        for (Iterator<Inimigo> it = enemies.iterator(); it.hasNext(); ) {
-            Inimigo enemy = it.next();
-            if(enemy.getRec().y > 449)
-                enemy.getRec().y -= enemy.getVel() * Gdx.graphics.getDeltaTime();
-            else if(enemy.getRec().x > 127 && enemy.getRec().y > 321)
-                enemy.getRec().x -= enemy.getVel() * Gdx.graphics.getDeltaTime();
-            else if(enemy.getRec().y > 321)
-                enemy.getRec().y -= enemy.getVel() * Gdx.graphics.getDeltaTime();
-            else if(enemy.getRec().x < 383 && enemy.getRec().y > 193)
-                enemy.getRec().x += enemy.getVel() * Gdx.graphics.getDeltaTime();
-            else if(enemy.getRec().y > 193)
-                enemy.getRec().y -= enemy.getVel() * Gdx.graphics.getDeltaTime();
-            else if(enemy.getRec().x > 127 && enemy.getRec().y > 65)
-                enemy.getRec().x -= enemy.getVel() * Gdx.graphics.getDeltaTime();
-            else if(enemy.getRec().y > 65)
-                enemy.getRec().y -= enemy.getVel() * Gdx.graphics.getDeltaTime();
-            else if(enemy.getRec().x < 383 )
-                enemy.getRec().x += enemy.getVel() * Gdx.graphics.getDeltaTime();
+        for (Iterator<InimigoBasico> it = enemies.iterator(); it.hasNext(); ) {
+            InimigoBasico enemy = it.next();
+            if (enemy.getRec().y > 449)
+                enemy.getRec().y -= enemy.getVelocidade() * Gdx.graphics.getDeltaTime();
+            else if (enemy.getRec().x > 127 && enemy.getRec().y > 321)
+                enemy.getRec().x -= enemy.getVelocidade() * Gdx.graphics.getDeltaTime();
+            else if (enemy.getRec().y > 321)
+                enemy.getRec().y -= enemy.getVelocidade() * Gdx.graphics.getDeltaTime();
+            else if (enemy.getRec().x < 383 && enemy.getRec().y > 193)
+                enemy.getRec().x += enemy.getVelocidade() * Gdx.graphics.getDeltaTime();
+            else if (enemy.getRec().y > 193)
+                enemy.getRec().y -= enemy.getVelocidade() * Gdx.graphics.getDeltaTime();
+            else if (enemy.getRec().x > 127 && enemy.getRec().y > 65)
+                enemy.getRec().x -= enemy.getVelocidade() * Gdx.graphics.getDeltaTime();
+            else if (enemy.getRec().y > 65)
+                enemy.getRec().y -= enemy.getVelocidade() * Gdx.graphics.getDeltaTime();
+            else if (enemy.getRec().x < 383 )
+                enemy.getRec().x += enemy.getVelocidade() * Gdx.graphics.getDeltaTime();
         }
 
         //Dá dano nos inimigos e muda eles de sala
         for (int linha = 0; linha < 7; linha ++) {
             for (int coluna = 0; coluna < 5; coluna++) {
                 if(mapa.getSalas(linha, coluna).getTipo() == 'C') {
-                    for (Iterator<Inimigo> it = enemies.iterator(); it.hasNext();) {
-                        Inimigo enemy = it.next();
+                    for (Iterator<InimigoBasico> it = enemies.iterator(); it.hasNext();) {
+                        InimigoBasico enemy = it.next();
                         if (mapa.getSalas(linha, coluna).getRec().contains(enemy.getRec().x, enemy.getRec().y)) {
-                            mapa.getSalas(linha, coluna).addInimigo(enemy);
+                            mapa.getSalas(linha, coluna).adicionaInimigo(enemy);
                             mapa.getSalas(linha, coluna).darDano();
-                            if(enemy.morre()){
+                            if(enemy.morre()) {
                                 it.remove();
-                                enemy.imagemInimigo().dispose();
+                                enemy.getImagemInimigo().dispose();
                                 ouro += enemy.getGoldDrop();
                             }
                         }
@@ -304,56 +292,29 @@ public class GameScreen  implements Screen, InputProcessor {
             }
         }
 
-        //Verifica se o mercado ou o inventário foi aberto
-//        for (MapObject object : tiledMap.getLayers().get("telas").getObjects()) {
-//            Rectangle rec = ((RectangleMapObject) object).getRectangle();
-//            if(Gdx.input.justTouched()){
-//                touchPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-//                this.camera.unproject(touchPosition);
-//            }
-//            if(rec.contains(touchPosition.x, touchPosition.y)){
-//                instantPaused = TimeUtils.nanoTime();
-//                paused = true;
-//                game.setScreen(new MercadoScreen(game, mapa, 0 ,0));
-//                touchPosition.set(0, 0, 0);
-//            }
-//        }
-
         //Termina o jogo se um inimigo chegou no tesouro
-        for (Iterator<Inimigo> it = enemies.iterator(); it.hasNext();) {
-            Inimigo enemy = it.next();
+        for (Iterator<InimigoBasico> it = enemies.iterator(); it.hasNext();) {
+            InimigoBasico enemy = it.next();
             if(enemy.getRec().y < 130 && enemy.getRec().x > 380) {
                 System.exit(0);
             }
         }
     }
 
+    @Override
+    public void resize(int width, int height) { }
 
     @Override
-    public void resize(int width, int height) {
-
-    }
+    public void pause() { }
 
     @Override
-    public void pause() {
-
-    }
+    public void resume() { }
 
     @Override
-    public void resume() {
-
-    }
+    public void hide() { }
 
     @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
-
-    }
-
+    public void dispose() { }
 
     @Override
     public boolean keyDown(int keycode) {

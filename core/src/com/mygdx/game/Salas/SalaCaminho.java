@@ -1,58 +1,26 @@
 package com.mygdx.game.Salas;
 
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.Efeito.Efeito;
-import com.mygdx.game.Inimigos.Inimigo;
-import com.mygdx.game.Torre.Torre;
-
+import com.mygdx.game.Efeito.EfeitoBasico;
+import com.mygdx.game.Inimigos.InimigoBasico;
 import java.util.Iterator;
 
-//Sala pela qual o inimigos podem passar//
+//Sala que pode conter Inimigos e Efeitos
 public class SalaCaminho extends SalaBasica {
-    private Array<Inimigo> enemies;
-    protected Efeito[] efeitos;
-    private Rectangle salaFront;
+    private Array<InimigoBasico> enemies;
+    protected EfeitoBasico[] efeitos;
+
     public SalaCaminho(int x, int y) {
         super(x, y);
-        enemies = new Array<Inimigo>();
+        enemies = new Array<InimigoBasico>();
         tipo = 'C';
-        this.efeitos = new Efeito[2];
+        this.efeitos = new EfeitoBasico[2];
         for(int j = 0; j < 2; j++)
             efeitos[j] = null;
     }
 
-    public void removeInimigo(Inimigo enemyRemoved) {
-        for (Iterator<Inimigo> it = enemies.iterator(); it.hasNext();) {
-            Inimigo enemy = it.next();
-            if (enemyRemoved == enemy) {
-                it.remove();
-            }
-        }
-    }
-
-    public void darDano() {
-        for (Iterator<Inimigo> it = enemies.iterator(); it.hasNext();){
-            Inimigo enemy = it.next();
-            for(int i = 0; i < 2; i++){
-                if(efeitos[i] != null){
-                    enemy.recebeDano(efeitos[i].getDano());
-                }
-            }
-        }
-    }
-
-    public boolean possuiEfeito(Efeito efeito) {
-       for(int i = 0; i < 2; i++){
-           if(efeitos[i] != null){
-               if(efeitos[i].getId() == efeito.getId())
-                return true;
-           }
-       }
-       return false;
-    }
-
-    public void adicionaEfeito(Efeito efeito) {
+    @Override
+    public void adicionaEfeito(EfeitoBasico efeito) {
         if(efeito != null) {
             if (!possuiEfeito(efeito)) {
                 int i = 0;
@@ -63,7 +31,9 @@ public class SalaCaminho extends SalaBasica {
             }
         }
     }
-    public void retiraEfeito(Efeito efeito){
+
+    @Override
+    public void removeEfeito(EfeitoBasico efeito){
         if(efeito != null) {
             if (possuiEfeito(efeito)) {
                 for (int i = 0; i < 2; i++) {
@@ -78,26 +48,10 @@ public class SalaCaminho extends SalaBasica {
     }
 
     @Override
-    public void remove() {
-
-    }
-
-
-    @Override
-    public Torre getTorre() {
-        return null;
-    }
-
-    @Override
-    public void setTorre(Torre torre) {
-
-    }
-
-    @Override
-    public void addInimigo(Inimigo inimigo) {
+    public void adicionaInimigo(InimigoBasico inimigo) {
         boolean jaExiste = false;
-        for (Iterator<Inimigo> it = enemies.iterator(); it.hasNext();) {
-            Inimigo enemie = it.next();
+        for (Iterator<InimigoBasico> it = enemies.iterator(); it.hasNext();) {
+            InimigoBasico enemie = it.next();
             if (enemie == inimigo) {
                 jaExiste = true;
             }
@@ -107,16 +61,34 @@ public class SalaCaminho extends SalaBasica {
     }
 
     @Override
-    public Inimigo[] getInimigo() {
-        return null;
+    public void removeInimigo(InimigoBasico enemyRemoved) {
+        for (Iterator<InimigoBasico> it = enemies.iterator(); it.hasNext();) {
+            InimigoBasico enemy = it.next();
+            if (enemyRemoved == enemy) {
+                it.remove();
+            }
+        }
     }
 
-    public Rectangle getRec() {
-        return salaFront;
+    @Override
+    public void darDano() {
+        for (Iterator<InimigoBasico> it = enemies.iterator(); it.hasNext();){
+            InimigoBasico enemy = it.next();
+            for(int i = 0; i < 2; i++) {
+                if(efeitos[i] != null) {
+                    enemy.recebeDano(efeitos[i].getDano());
+                }
+            }
+        }
     }
 
-    public void setRec(Rectangle rec){
-        this.salaFront = rec;
+    public boolean possuiEfeito(EfeitoBasico efeito) {
+       for(int i = 0; i < 2; i++){
+           if(efeitos[i] != null) {
+               if(efeitos[i].getId() == efeito.getId())
+                return true;
+           }
+       }
+       return false;
     }
-
 }

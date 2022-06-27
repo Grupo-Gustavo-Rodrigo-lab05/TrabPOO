@@ -2,8 +2,8 @@ package com.mygdx.game.Inimigos;
 
 import com.badlogic.gdx.graphics.Texture;
 
-public class InimigoMorcego extends Inimigo {
-
+//Inimigo Morcego - Vida baixa e velocidade alta
+public class InimigoMorcego extends InimigoBasico {
     public InimigoMorcego() {
         vida = 800;
         velocidade = 160;
@@ -11,8 +11,8 @@ public class InimigoMorcego extends Inimigo {
         create();
     }
 
+    @Override
     public void create() {
         imagemInimigo = new Texture("EnemyBat.png");
     }
-
 }

@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -16,13 +15,12 @@ import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.Mapa;
 
 public class MainMenuScreen implements Screen {
-        Texture img;
-        TiledMap tiledMap;
-        OrthographicCamera camera;
-        TiledMapRenderer tiledMapRenderer;
-        Vector3 touchPosition;
         private final Renderizador game;
         public Mapa mapa;
+        private TiledMap tiledMap;
+        private OrthographicCamera camera;
+        private TiledMapRenderer tiledMapRenderer;
+        private Vector3 touchPosition;
         private static GameScreen telaJogo;
 
         public MainMenuScreen(final Renderizador game, Mapa mapa){
@@ -31,16 +29,13 @@ public class MainMenuScreen implements Screen {
                 float w = Gdx.graphics.getWidth();
                 float h = Gdx.graphics.getHeight();
 
-                //Organiza camera e o TiledMap//
+                //Organiza a câmera e o TiledMap
                 camera = new OrthographicCamera();
                 camera.setToOrtho(false,w,h);
                 camera.update();
                 tiledMap = new TmxMapLoader().load("Menu.tmx");
                 tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
                 touchPosition = new Vector3();
-        }
-        public void show() {
-
         }
 
         public static GameScreen getTelaJogo() {
@@ -57,7 +52,7 @@ public class MainMenuScreen implements Screen {
                 tiledMapRenderer.setView(camera);
                 tiledMapRenderer.render();
 
-                //Verifica se os botões são clicados e passa para GameScreen
+                //Verifica se os botões são clicados e passa para a GameScreen
                 for (MapObject object : tiledMap.getLayers().get("Botoes").getObjects()) {
                         Rectangle rec = ((RectangleMapObject) object).getRectangle();
                         touchPosition = new Vector3();
@@ -73,27 +68,20 @@ public class MainMenuScreen implements Screen {
         }
 
         @Override
-        public void resize(int width, int height) {
-
-        }
+        public void show() { }
 
         @Override
-        public void pause() {
-
-        }
+        public void resize(int width, int height) { }
 
         @Override
-        public void resume() {
-
-        }
+        public void pause() { }
 
         @Override
-        public void hide() {
-
-        }
+        public void resume() { }
 
         @Override
-        public void dispose() {
+        public void hide() { }
 
-        }
+        @Override
+        public void dispose() { }
 }

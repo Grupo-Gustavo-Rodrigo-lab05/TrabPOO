@@ -1,49 +1,17 @@
 package com.mygdx.game.Inimigos;
 
-
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 
-public abstract class Inimigo extends ApplicationAdapter {
-    protected int velocidade;
-    protected float vida;
-    protected int goldDrop;
-    Texture imagemInimigo;
-    private Rectangle local;
-
-    public int getVel(){
-        return velocidade;
-    }
-
-    public int getGoldDrop() {
-        return goldDrop;
-    }
-
-    public void recebeDano(float dano) {
-        vida -= dano;
-    }
-
-    public boolean morre() {
-        if(vida <= 0){
-            return true;
-        }
-        return false;
-    }
-
-    public void setRec(float x, float y) {
-        local = new Rectangle();
-        local.x = x;
-        local.y = y;
-        local.width = 64;
-        local.height = 64;
-    }
-    public Rectangle getRec() {
-        return local;
-    }
-
-    public Texture imagemInimigo() {
-        return imagemInimigo;
-    }
-
+//Interface contendo todos os métodos de um Inimigo que são 'public' (podem ser acessados de fora)
+public interface Inimigo {
+    //Métodos gerais
+    int getVelocidade();
+    int getGoldDrop();
+    void recebeDano(float dano);
+    boolean morre();
+    Rectangle getRec();
+    void setRec(float x, float y);
+    Texture getImagemInimigo();
+    void create();
 }

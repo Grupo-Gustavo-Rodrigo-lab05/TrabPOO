@@ -1,15 +1,12 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.mygdx.game.Screens.Renderizador;
 
+//Responsável por criar o mapa e o controlador
 public class Builder extends ApplicationAdapter{
     private Mapa mapa;
     private Controle controle;
-    private Renderizador renderizador;
 
-    //Responsavel por criar o mapa e o controlador//
     public Builder() {
         this.mapa = new Mapa();
         this.controle = new Controle();
@@ -18,5 +15,4 @@ public class Builder extends ApplicationAdapter{
     public Mapa getMapa(){
         return mapa;
     }
-
 }

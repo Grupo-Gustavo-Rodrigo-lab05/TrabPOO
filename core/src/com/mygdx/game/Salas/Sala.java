@@ -1,33 +1,27 @@
 package com.mygdx.game.Salas;
 
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.Efeito.Efeito;
-import com.mygdx.game.Inimigos.Inimigo;
-import com.mygdx.game.Torre.Torre;
-//Interface contendo todas as funções de uma sala//
+import com.mygdx.game.Efeito.EfeitoBasico;
+import com.mygdx.game.Inimigos.InimigoBasico;
+import com.mygdx.game.Torre.TorreBasica;
+
+//Interface contendo todos os métodos de uma Sala que são 'public' (podem ser acessados de fora)
 public interface Sala {
+    //Métodos gerais
     int getX();
-
     int getY();
-
     char getTipo();
-
-    public void adicionaEfeito(Efeito efeito);
-
-    Torre getTorre();
-
-    void setTorre(Torre torre);
-
-    void addInimigo(Inimigo inimigo);
-
-    Inimigo[] getInimigo();
-
+    Rectangle getRec();
     void setRec(Rectangle rec);
 
-    void remove();
+    //Métodos SalaCaminho
+    void adicionaEfeito(EfeitoBasico efeito);
+    void removeEfeito(EfeitoBasico efeito);
+    void adicionaInimigo(InimigoBasico inimigo);
+    void removeInimigo(InimigoBasico enemy);
+    void darDano();
 
-    Rectangle getRec();
-    public void retiraEfeito(Efeito efeito);
-    public void darDano();
-    public void removeInimigo(Inimigo enemy);
+    //Métodos SalaTorre
+    TorreBasica getTorre();
+    void setTorre(TorreBasica torre);
 }

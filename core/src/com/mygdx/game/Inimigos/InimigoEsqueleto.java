@@ -2,17 +2,17 @@ package com.mygdx.game.Inimigos;
 
 import com.badlogic.gdx.graphics.Texture;
 
-public class InimigoEsqueleto extends Inimigo {
-
+//Segundo Boss Esqueleto - Vida muito alta e velocidade baixa
+public class InimigoEsqueleto extends InimigoBasico {
     public InimigoEsqueleto() {
-        vida = 30000;
+        vida = 15000;
         velocidade = 40;
         goldDrop = 50;
         create();
     }
 
+    @Override
     public void create() {
         imagemInimigo = new Texture("BossSkeleton.png");
     }
-
 }

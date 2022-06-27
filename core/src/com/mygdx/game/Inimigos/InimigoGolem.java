@@ -2,8 +2,8 @@ package com.mygdx.game.Inimigos;
 
 import com.badlogic.gdx.graphics.Texture;
 
-public class InimigoGolem extends Inimigo {
-
+//Primeiro Boss Golem - Vida muito alta e velocidade muito baixa
+public class InimigoGolem extends InimigoBasico {
     public InimigoGolem() {
         vida = 20000;
         velocidade = 20;
@@ -11,8 +11,8 @@ public class InimigoGolem extends Inimigo {
         create();
     }
 
+    @Override
     public void create() {
         imagemInimigo = new Texture("BossGolem.png");
     }
-
 }
