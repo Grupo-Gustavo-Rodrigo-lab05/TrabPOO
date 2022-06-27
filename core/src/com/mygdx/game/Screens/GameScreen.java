@@ -43,7 +43,10 @@ public class GameScreen  implements Screen, InputProcessor {
     private long timePausedDelay;
     public static boolean fechouMercado;
     private BitmapFont fonte;
-    int contador1 = 0;
+    private char[][] ondas;
+    private int ondasI;
+    private int ondasJ;
+
     public GameScreen(final Renderizador game, Mapa mapa){
         this.game = game;
         this.mapa = mapa;
@@ -60,7 +63,21 @@ public class GameScreen  implements Screen, InputProcessor {
         Gdx.input.setInputProcessor(this);
         enemies = new Array<Inimigo>();
         fonte = new BitmapFont();
+        fonte.setColor(0, 0, 0, 1);
         ouro = 20;
+
+        ondasI = 0;
+        ondasJ = 0;
+        ondas = new char[][] {{'F', 'F', 'F', 'F', 'F'},
+                              {'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F'},
+                              {'F', 'F', 'F', 'M', 'M', 'M'},
+                              {'M', 'M', 'M', 'F', 'F', 'F', 'M', 'M', 'M'},
+                              {'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'G'}, //Primeiro Boss 'Golem'
+                              {'F', 'M', 'F', 'M', 'F', 'M', 'A', 'A', 'A', 'A'},
+                              {'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A'},
+                              {'O', 'O', 'A', 'A', 'A', 'O', 'O'},
+                              {'O', 'O', 'O', 'O', 'M', 'O', 'O', 'O', 'O', 'M'},
+                              {'O', 'A', 'O', 'A', 'F', 'M', 'F', 'M', 'O', 'O', 'A', 'A', 'E'}}; //Segundo Boss 'Esqueleto'
 
         spawnEnemies();
         int contador = 0;
@@ -103,14 +120,45 @@ public class GameScreen  implements Screen, InputProcessor {
             }
         }
     }
+
+    private void incrementaOndas() {
+        if (ondasJ + 1 < ondas[ondasI].length)
+            ondasJ++;
+        else {
+            ondasI++;
+            ondasJ = 0;
+        }
+    }
+
     public void spawnEnemies(){
-        for (MapObject object : tiledMap.getLayers().get("Spawn").getObjects()) {
-            Rectangle Spawn = ((RectangleMapObject) object).getRectangle();
-            Inimigo enemie = new InimigoFaca();
-            enemie.setRec(Spawn.x, Spawn.y);
-            enemies.add(enemie);
-            lastDropTime = TimeUtils.nanoTime();
-            mapa.getSalas(0, 4).addInimigo(enemie);
+        if (ondasI < 10) {
+            for (MapObject object : tiledMap.getLayers().get("Spawn").getObjects()) {
+                Rectangle Spawn = ((RectangleMapObject) object).getRectangle();
+                Inimigo enemie;
+                if (ondas[ondasI][ondasJ] == 'F') {
+                    enemie = new InimigoFaca();
+                    incrementaOndas();
+                } else if (ondas[ondasI][ondasJ] == 'M') {
+                    enemie = new InimigoMorcego();
+                    incrementaOndas();
+                } else if (ondas[ondasI][ondasJ] == 'A') {
+                    enemie = new InimigoArmadura();
+                    incrementaOndas();
+                } else if (ondas[ondasI][ondasJ] == 'O') {
+                    enemie = new InimigoOgro();
+                    incrementaOndas();
+                } else if (ondas[ondasI][ondasJ] == 'G') {
+                    enemie = new InimigoGolem();
+                    incrementaOndas();
+                } else {
+                    enemie = new InimigoEsqueleto();
+                    incrementaOndas();
+                }
+                enemie.setRec(Spawn.x, Spawn.y);
+                enemies.add(enemie);
+                lastDropTime = TimeUtils.nanoTime();
+                mapa.getSalas(0, 4).addInimigo(enemie);
+            }
         }
     }
 
@@ -259,19 +307,19 @@ public class GameScreen  implements Screen, InputProcessor {
         }
 
         //Verifica se o mercado ou o inventário foi aberto
-        for (MapObject object : tiledMap.getLayers().get("telas").getObjects()) {
-            Rectangle rec = ((RectangleMapObject) object).getRectangle();
-            if(Gdx.input.justTouched()){
-                touchPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-                this.camera.unproject(touchPosition);
-            }
-            if(rec.contains(touchPosition.x, touchPosition.y)){
-                instantPaused = TimeUtils.nanoTime();
-                paused = true;
-                game.setScreen(new MercadoScreen(game, mapa, 0 ,0));
-                touchPosition.set(0, 0, 0);
-            }
-        }
+//        for (MapObject object : tiledMap.getLayers().get("telas").getObjects()) {
+//            Rectangle rec = ((RectangleMapObject) object).getRectangle();
+//            if(Gdx.input.justTouched()){
+//                touchPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+//                this.camera.unproject(touchPosition);
+//            }
+//            if(rec.contains(touchPosition.x, touchPosition.y)){
+//                instantPaused = TimeUtils.nanoTime();
+//                paused = true;
+//                game.setScreen(new MercadoScreen(game, mapa, 0 ,0));
+//                touchPosition.set(0, 0, 0);
+//            }
+//        }
 
         //Termina o jogo se um inimigo chegou no tesouro
         for (Iterator<Inimigo> it = enemies.iterator(); it.hasNext();) {

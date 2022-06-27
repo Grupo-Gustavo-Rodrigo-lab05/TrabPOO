@@ -49,7 +49,7 @@ public class MainMenuScreen implements Screen {
 
         @Override
         public void render(float delta) {
-                //Renderiza o menu inicial//
+                //Renderiza o menu inicial
                 Gdx.gl.glClearColor(1, 0, 0, 1);
                 Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
                 Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -57,7 +57,7 @@ public class MainMenuScreen implements Screen {
                 tiledMapRenderer.setView(camera);
                 tiledMapRenderer.render();
 
-                //Verifica se os botões são clicados e passa para gameScreen//
+                //Verifica se os botões são clicados e passa para GameScreen
                 for (MapObject object : tiledMap.getLayers().get("Botoes").getObjects()) {
                         Rectangle rec = ((RectangleMapObject) object).getRectangle();
                         touchPosition = new Vector3();
