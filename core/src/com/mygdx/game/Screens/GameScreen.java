@@ -70,7 +70,7 @@ public class GameScreen  implements Screen, InputProcessor {
         ondasJ = 0;
         ondas = new char[][] {{'F', 'F', 'F', 'F', 'F'},
                               {'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F'},
-                              {'F', 'F', 'F', 'M', 'M', 'M'},
+                              {'F', 'F', 'F', 'F', 'F', 'M', 'M', 'M'},
                               {'M', 'M', 'M', 'F', 'F', 'F', 'M', 'M', 'M'},
                               {'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'G'}, //Primeiro Boss 'Golem'
                               {'F', 'M', 'F', 'M', 'F', 'M', 'A', 'A', 'A', 'A'},
@@ -281,9 +281,9 @@ public class GameScreen  implements Screen, InputProcessor {
                 enemy.getRec().x += enemy.getVel() * Gdx.graphics.getDeltaTime();
         }
 
-        //Dá dano nos inimigos
+        //Dá dano nos inimigos e muda eles de sala
         for (int linha = 0; linha < 7; linha ++) {
-            for (int coluna = 0; coluna < 5; coluna++){
+            for (int coluna = 0; coluna < 5; coluna++) {
                 if(mapa.getSalas(linha, coluna).getTipo() == 'C') {
                     for (Iterator<Inimigo> it = enemies.iterator(); it.hasNext();) {
                         Inimigo enemy = it.next();
@@ -295,6 +295,9 @@ public class GameScreen  implements Screen, InputProcessor {
                                 enemy.imagemInimigo().dispose();
                                 ouro += enemy.getGoldDrop();
                             }
+                        }
+                        else {
+                            mapa.getSalas(linha, coluna).removeInimigo(enemy);
                         }
                     }
                 }

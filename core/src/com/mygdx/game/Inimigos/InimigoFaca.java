@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 public class InimigoFaca extends Inimigo {
 
     public InimigoFaca() {
-        vida = 5000;
+        vida = 1000;
         velocidade = 100;
         goldDrop = 1;
         create();

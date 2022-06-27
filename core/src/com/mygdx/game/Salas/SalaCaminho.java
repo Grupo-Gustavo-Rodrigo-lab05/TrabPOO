@@ -9,7 +9,7 @@ import com.mygdx.game.Torre.Torre;
 import java.util.Iterator;
 
 //Sala pela qual o inimigos podem passar//
-public class SalaCaminho extends SalaBasica{
+public class SalaCaminho extends SalaBasica {
     private Array<Inimigo> enemies;
     protected Efeito[] efeitos;
     private Rectangle salaFront;
@@ -17,18 +17,26 @@ public class SalaCaminho extends SalaBasica{
         super(x, y);
         enemies = new Array<Inimigo>();
         tipo = 'C';
-        this.efeitos = new Efeito[2]; //TROCAR PELO NUMERO DE EFEITOS QUE COLOCARMOS NO JOGO
+        this.efeitos = new Efeito[2];
         for(int j = 0; j < 2; j++)
             efeitos[j] = null;
-        enemies = new Array<Inimigo>();
     }
 
-    public void darDano(){
+    public void removeInimigo(Inimigo enemyRemoved) {
+        for (Iterator<Inimigo> it = enemies.iterator(); it.hasNext();) {
+            Inimigo enemy = it.next();
+            if (enemyRemoved == enemy) {
+                it.remove();
+            }
+        }
+    }
+
+    public void darDano() {
         for (Iterator<Inimigo> it = enemies.iterator(); it.hasNext();){
-            Inimigo enemie = it.next();
+            Inimigo enemy = it.next();
             for(int i = 0; i < 2; i++){
                 if(efeitos[i] != null){
-                    enemie.recebeDano(efeitos[i].getDano());
+                    enemy.recebeDano(efeitos[i].getDano());
                 }
             }
         }

@@ -29,4 +29,5 @@ public interface Sala {
     Rectangle getRec();
     public void retiraEfeito(Efeito efeito);
     public void darDano();
+    public void removeInimigo(Inimigo enemy);
 }

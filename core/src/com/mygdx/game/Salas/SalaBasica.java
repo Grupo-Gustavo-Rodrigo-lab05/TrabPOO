@@ -2,8 +2,9 @@ package com.mygdx.game.Salas;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.Efeito.Efeito;
+import com.mygdx.game.Inimigos.Inimigo;
 
-//Interface contendo todas as funções basicas de uma sala//
+//Interface contendo todas as funções basicas de uma sala
 public abstract class SalaBasica implements Sala {
     protected int x, y;
     protected char tipo;
@@ -30,5 +31,6 @@ public abstract class SalaBasica implements Sala {
         this.y = y;
     }
 
+    public void removeInimigo(Inimigo enemy) {}
 
 }
