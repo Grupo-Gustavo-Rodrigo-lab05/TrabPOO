@@ -62,7 +62,7 @@ public class GameScreen implements Screen, InputProcessor {
         enemies = new Array<InimigoBasico>();
         fonte = new BitmapFont();
         fonte.setColor(0, 0, 0, 1);
-        ouro = 20;
+        ouro = 35; //Quantidade de ouro inicial
 
         //Organiza as ondas de inimigos
         ondasI = 0;
