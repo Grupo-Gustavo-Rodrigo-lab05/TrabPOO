@@ -182,13 +182,21 @@ public class GameScreen implements Screen, InputProcessor {
             batch.draw(enemy.getImagemInimigo(), enemy.getRec().x, enemy.getRec().y);
         }
 
-        //Desenha o ouro
+        //Desenha o ouro do jogador
         if(ouro >= 100)
             fonte.getData().setScale(1.0f);
         else{
             fonte.getData().setScale(1.5f);
         }
         fonte.draw(batch, String.valueOf(ouro), 5, 557);
+
+        //Desenha a onda atual
+        fonte.getData().setScale(2.0f);
+        int ondaAtual = ondasI + 1;
+        if (ondaAtual == 11) { //Apenas para exibição correta na tela
+            ondaAtual = 10;
+        }
+        fonte.draw(batch, "Onda atual: " + (ondaAtual), 80, 556);
 
         //Administra o estado do jogo (Pause)
         if(paused) {
