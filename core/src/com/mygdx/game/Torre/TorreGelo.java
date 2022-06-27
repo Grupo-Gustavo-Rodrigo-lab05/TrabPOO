@@ -10,6 +10,7 @@ public class TorreGelo extends Torre{
         super(x, y);
         tipo = 'G';
         efeito = new EfeitoGelo();
+        create();
     }
 
     @Override

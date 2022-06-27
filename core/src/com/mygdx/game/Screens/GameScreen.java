@@ -19,15 +19,15 @@ import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.mygdx.game.Inimigos.Inimigo;
-import com.mygdx.game.Inimigos.InimigoZumbi;
+import com.mygdx.game.Inimigos.*;
 import com.mygdx.game.Mapa;
+import com.mygdx.game.Torre.TorreVazia;
 
 import java.util.Iterator;
 
 public class GameScreen  implements Screen, InputProcessor {
     Texture pauseImg;
-    private int ouro = 0;
+    private int ouro;
     TiledMap tiledMap;
     OrthographicCamera camera;
     TiledMapRenderer tiledMapRenderer;
@@ -60,6 +60,8 @@ public class GameScreen  implements Screen, InputProcessor {
         Gdx.input.setInputProcessor(this);
         enemies = new Array<Inimigo>();
         fonte = new BitmapFont();
+        ouro = 20;
+
         spawnEnemies();
         int contador = 0;
         if(contador == 0){
@@ -68,9 +70,18 @@ public class GameScreen  implements Screen, InputProcessor {
         }
     }
 
+    public int getOuro() {
+        return ouro;
+    }
+
+    public void gastaOuro(int valorGasto) {
+        ouro -= valorGasto;
+    }
+
     public static void resetTouchPosition(){
         touchPosition.set(0,0,0);
     }
+
     public void ligaSalas(){
         //ARRUMAR ESSA LOGICA//
         String linha ;
@@ -95,7 +106,7 @@ public class GameScreen  implements Screen, InputProcessor {
     public void spawnEnemies(){
         for (MapObject object : tiledMap.getLayers().get("Spawn").getObjects()) {
             Rectangle Spawn = ((RectangleMapObject) object).getRectangle();
-            Inimigo enemie = new InimigoZumbi();
+            Inimigo enemie = new InimigoFaca();
             enemie.setRec(Spawn.x, Spawn.y);
             enemies.add(enemie);
             lastDropTime = TimeUtils.nanoTime();
@@ -105,12 +116,12 @@ public class GameScreen  implements Screen, InputProcessor {
 
     @Override
     public void show() {
-        viewport = new FitViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight() );
+        viewport = new FitViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
     }
 
     @Override
     public void render (float delta) {
-        //Limpa a tela, update na camera//
+        //Limpa a tela e realiza update na câmera
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -119,18 +130,12 @@ public class GameScreen  implements Screen, InputProcessor {
         tiledMapRenderer.render();
         game.batch.setProjectionMatrix(camera.combined);
         batch.setProjectionMatrix(camera.combined);
-
         batch.begin();
-        if(ouro >= 100)
-            fonte.getData().setScale(1.0f);
-        else{
-            fonte.getData().setScale(1.5f);
-        }
+
         //Desenha as torres
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 5; j++) {
-                if (mapa.getSalas(i, j).getTipo() == 'T') {
-                    mapa.getSalas(i, j).getTorre().create();
+                if (mapa.getSalas(i, j).getTipo() == 'T' && mapa.getSalas(i, j).getTorre().TorreTipo() != 'V') {
                     batch.draw(mapa.getSalas(i, j).getTorre().imagemTorre(), mapa.getSalas(i, j).getRec().x, mapa.getSalas(i, j).getRec().y);
                 }
             }
@@ -140,7 +145,15 @@ public class GameScreen  implements Screen, InputProcessor {
         for (Inimigo enemie : enemies) {
             batch.draw(enemie.imagemInimigo(), enemie.getRec().x, enemie.getRec().y);
         }
+
+        //Desenha o ouro
+        if(ouro >= 100)
+            fonte.getData().setScale(1.0f);
+        else{
+            fonte.getData().setScale(1.5f);
+        }
         fonte.draw(batch, String.valueOf(ouro), 5, 557);
+
         if(paused) {
             batch.draw(pauseImg, 512, 512);
             if(Gdx.input.isKeyJustPressed(Input.Keys.P) || fechouMercado) {
@@ -156,7 +169,7 @@ public class GameScreen  implements Screen, InputProcessor {
     }
 
     public void generalUpdate() {
-        //Pausa o jogo
+        //Pausa o jogo quando o usuário aperta 'P'
         if(Gdx.input.isKeyJustPressed(Input.Keys.P)) {
             instantPaused = TimeUtils.nanoTime();
             paused = true;
@@ -192,7 +205,7 @@ public class GameScreen  implements Screen, InputProcessor {
         }
 
         //Spawn de inimigos
-        if ((TimeUtils.nanoTime() - timePausedDelay) - lastDropTime > 1000000000/2) {
+        if ((TimeUtils.nanoTime() - timePausedDelay) - lastDropTime > 1000000000) {
             spawnEnemies();
             timePausedDelay = 0;
         }
@@ -225,7 +238,7 @@ public class GameScreen  implements Screen, InputProcessor {
             }
         }
 
-        //Ver em qual sala esta cada inimigo
+        //Ver em qual sala está cada inimigo
         for (int linha = 0; linha < 7; linha ++) {
             for (int coluna = 0; coluna < 5; coluna++){
                 if(mapa.getSalas(linha, coluna).getTipo() == 'C') {
@@ -237,9 +250,7 @@ public class GameScreen  implements Screen, InputProcessor {
                             if(enemie.morre()){
                                 it.remove();
                                 enemie.imagemInimigo().dispose();
-                                ouro++;
-
-
+                                ouro += enemie.getGoldDrop();
                             }
                         }
                     }
@@ -294,14 +305,7 @@ public class GameScreen  implements Screen, InputProcessor {
 
     @Override
     public void dispose() {
-        tiledMap.dispose();
-        for(int i = 0; i < 7; i ++){
-            for(int j = 0; j < 5; j ++){
-                if(mapa.getSalas(i, j).getTipo()=='T'){
-                    mapa.getSalas(i, j).getTorre().imagemTorre().dispose();
-                }
-            }
-        }
+
     }
 
 

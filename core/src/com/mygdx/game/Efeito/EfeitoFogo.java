@@ -7,7 +7,7 @@ import static com.badlogic.gdx.math.MathUtils.random;
 public class EfeitoFogo extends Efeito{
 
     public EfeitoFogo() {
-        dano = 200;
+        dano = 20;
         id =  random.nextInt(100);;
         create();
     }

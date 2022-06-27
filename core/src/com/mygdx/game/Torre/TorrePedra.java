@@ -9,6 +9,7 @@ public class TorrePedra extends Torre {
         super(x, y);
         tipo = 'R';
         efeito = new EfeitoPedra();
+        create();
     }
 
     @Override

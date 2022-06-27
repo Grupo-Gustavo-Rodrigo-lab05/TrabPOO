@@ -23,7 +23,7 @@ public class MainMenuScreen implements Screen {
         Vector3 touchPosition;
         private final Renderizador game;
         public Mapa mapa;
-        public static GameScreen telaJogo;
+        private static GameScreen telaJogo;
 
         public MainMenuScreen(final Renderizador game, Mapa mapa){
                 this.game = game;
@@ -41,6 +41,10 @@ public class MainMenuScreen implements Screen {
         }
         public void show() {
 
+        }
+
+        public static GameScreen getTelaJogo() {
+                return telaJogo;
         }
 
         @Override

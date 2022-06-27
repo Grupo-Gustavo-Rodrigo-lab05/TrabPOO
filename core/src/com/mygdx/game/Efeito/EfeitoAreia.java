@@ -6,7 +6,7 @@ import static com.badlogic.gdx.math.MathUtils.random;
 
 public class EfeitoAreia extends Efeito{
     public EfeitoAreia() {
-        dano = 200;
+        dano = 5;
         id =  random.nextInt(100);;
         create();
     }

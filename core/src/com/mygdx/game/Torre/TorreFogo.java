@@ -10,6 +10,7 @@ public class TorreFogo extends Torre {
         super(x, y);
         tipo = 'F';
         efeito = new EfeitoFogo();
+        create();
     }
 
     @Override

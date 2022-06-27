@@ -5,21 +5,23 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 
-import javax.xml.soap.Text;
-
 public abstract class Inimigo extends ApplicationAdapter {
     protected int velocidade;
     protected float vida;
+    protected int goldDrop;
     Texture imagemInimigo;
     private Rectangle local;
 
     public int getVel(){
         return velocidade;
     }
+
+    public int getGoldDrop() {
+        return goldDrop;
+    }
+
     public void recebeDano(float dano) {
         vida -= dano;
-        if(vida <= 0)
-            morre();
     }
 
     public boolean morre() {

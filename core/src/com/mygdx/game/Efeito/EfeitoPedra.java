@@ -7,7 +7,7 @@ import static com.badlogic.gdx.math.MathUtils.random;
 public class EfeitoPedra extends Efeito{
 
     public EfeitoPedra() {
-        dano = 150;
+        dano = 15;
         id =  random.nextInt(100);;
         create();
     }

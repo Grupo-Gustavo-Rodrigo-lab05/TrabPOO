@@ -9,6 +9,7 @@ public class TorreAreia extends Torre{
         super(x, y);
         tipo = 'A';
         efeito = new EfeitoAreia();
+        create();
     }
 
     @Override

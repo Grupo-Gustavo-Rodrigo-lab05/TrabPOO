@@ -7,7 +7,7 @@ import static com.badlogic.gdx.math.MathUtils.random;
 public class EfeitoGelo extends Efeito{
 
     public EfeitoGelo() {
-        dano = 50;
+        dano = 10;
         id =  random.nextInt(100);;
         create();
     }

@@ -10,14 +10,14 @@ public abstract class Torre extends ApplicationAdapter implements TorreInterface
     int x;
     int y;
     Texture imagemTorre;
-    float dano;
     Efeito efeito;
-    char tipo;
+    protected char tipo;
 
     public Torre(int x, int y) {
         this.x = x;
         this.y = y;
     }
+
     public int getX() {
         return x;
     }
