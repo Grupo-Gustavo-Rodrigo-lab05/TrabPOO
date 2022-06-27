@@ -1,6 +1,5 @@
 package com.mygdx.game.Screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -16,10 +15,10 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.Mapa;
+import com.mygdx.game.Torre.TorreAreia;
 import com.mygdx.game.Torre.TorreFogo;
 import com.mygdx.game.Torre.TorreGelo;
-import com.mygdx.game.Torre.TorreRaio;
-import sun.util.resources.cldr.es.CalendarData_es_GQ;
+import com.mygdx.game.Torre.TorrePedra;
 
 public class MercadoScreen implements Screen {
 
@@ -67,6 +66,15 @@ public class MercadoScreen implements Screen {
     public void show() {
 
     }
+    private void removeEfeito(){
+        for (int m = -1; m <= 1; m++) {
+            for (int z = -1; z <= 1; z++) {
+                if (mapa.getSalas(x + m, y + z).getTipo() == 'C') {
+                    mapa.getSalas(x+m, y+z).retiraEfeito(mapa.getSalas(x, y).getTorre().getEfeitoTorre());
+                }
+            }
+        }
+    }
 
     @Override
     public void render(float delta) {
@@ -88,7 +96,7 @@ public class MercadoScreen implements Screen {
             batch.draw(imgComprar, rec1.x, rec1.y);
         }
         batch.end();
-
+        GameScreen.resetTouchPosition();
         //Verifica qual torre foi comprada e troca ela na SalaTorre//
         if(Gdx.input.justTouched()){
             touchPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -99,17 +107,26 @@ public class MercadoScreen implements Screen {
             game.setScreen(MainMenuScreen.telaJogo);
         }
         if(botao1.contains(touchPosition.x, touchPosition.y)){
+            removeEfeito();
             mapa.getSalas(x, y).setTorre(new TorreFogo(x, y));
             GameScreen.fechouMercado = true;
             game.setScreen(MainMenuScreen.telaJogo);
         }
         if(botao2.contains(touchPosition.x, touchPosition.y)){
-            mapa.getSalas(x, y).setTorre(new TorreRaio(x, y));
+            removeEfeito();
+            mapa.getSalas(x, y).setTorre(new TorrePedra(x, y));
             GameScreen.fechouMercado = true;
             game.setScreen(MainMenuScreen.telaJogo);
         }
         if(botao3.contains(touchPosition.x, touchPosition.y)){
+            removeEfeito();
             mapa.getSalas(x, y).setTorre(new TorreGelo(x, y));
+            GameScreen.fechouMercado = true;
+            game.setScreen(MainMenuScreen.telaJogo);
+        }
+        if(botao4.contains(touchPosition.x, touchPosition.y)){
+            removeEfeito();
+            mapa.getSalas(x, y).setTorre(new TorreAreia(x, y));
             GameScreen.fechouMercado = true;
             game.setScreen(MainMenuScreen.telaJogo);
         }

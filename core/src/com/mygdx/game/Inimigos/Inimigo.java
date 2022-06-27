@@ -9,18 +9,24 @@ import javax.xml.soap.Text;
 
 public abstract class Inimigo extends ApplicationAdapter {
     protected int velocidade;
-    protected int vida;
+    protected float vida;
     Texture imagemInimigo;
     private Rectangle local;
 
-    public void recebeDano(int dano) {
+    public int getVel(){
+        return velocidade;
+    }
+    public void recebeDano(float dano) {
         vida -= dano;
         if(vida <= 0)
             morre();
     }
 
-    private void morre() {
-
+    public boolean morre() {
+        if(vida <= 0){
+            return true;
+        }
+        return false;
     }
 
     public void setRec(float x, float y) {

@@ -4,15 +4,15 @@ import com.badlogic.gdx.graphics.Texture;
 
 import static com.badlogic.gdx.math.MathUtils.random;
 
-public class EfeitoGelo extends Efeito{
+public class EfeitoPedra extends Efeito{
 
-    public EfeitoGelo() {
-        dano = 50;
+    public EfeitoPedra() {
+        dano = 150;
         id =  random.nextInt(100);;
         create();
     }
 
     public void create(){
-        imagemEfeito = new Texture("EfeitoGelo.png");
+        imagemEfeito = new Texture("EfeitoPedra.png");
     }
 }

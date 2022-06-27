@@ -6,6 +6,8 @@ import com.mygdx.game.Efeito.Efeito;
 import com.mygdx.game.Inimigos.Inimigo;
 import com.mygdx.game.Torre.Torre;
 
+import java.util.Iterator;
+
 //Sala pela qual o inimigos podem passar//
 public class SalaCaminho extends SalaBasica{
     private Array<Inimigo> enemies;
@@ -15,14 +17,25 @@ public class SalaCaminho extends SalaBasica{
         super(x, y);
         enemies = new Array<Inimigo>();
         tipo = 'C';
-        this.efeitos = new Efeito[10]; //TROCAR PELO NUMERO DE EFEITOS QUE COLOCARMOS NO JOGO
-        for(int j = 0; j < 10; j++)
+        this.efeitos = new Efeito[2]; //TROCAR PELO NUMERO DE EFEITOS QUE COLOCARMOS NO JOGO
+        for(int j = 0; j < 2; j++)
             efeitos[j] = null;
         enemies = new Array<Inimigo>();
     }
 
+    public void darDano(){
+        for (Iterator<Inimigo> it = enemies.iterator(); it.hasNext();){
+            Inimigo enemie = it.next();
+            for(int i = 0; i < 2; i++){
+                if(efeitos[i] != null){
+                    enemie.recebeDano(efeitos[i].getDano());
+                }
+            }
+        }
+    }
+
     public boolean possuiEfeito(Efeito efeito) {
-       for(int i = 0; i < 10; i++){
+       for(int i = 0; i < 2; i++){
            if(efeitos[i] != null){
                if(efeitos[i].getId() == efeito.getId())
                 return true;
@@ -32,12 +45,27 @@ public class SalaCaminho extends SalaBasica{
     }
 
     public void adicionaEfeito(Efeito efeito) {
-        if(!possuiEfeito(efeito)) {
-            int i = 0;
-            while (efeitos[i] != null) { //Encontra o primeiro índice vazio no vetor
-                i++;
+        if(efeito != null) {
+            if (!possuiEfeito(efeito)) {
+                int i = 0;
+                while (efeitos[i] != null) { //Encontra o primeiro índice vazio no vetor
+                    i++;
+                }
+                efeitos[i] = efeito;
             }
-            efeitos[i] = efeito;
+        }
+    }
+    public void retiraEfeito(Efeito efeito){
+        if(efeito != null) {
+            if (possuiEfeito(efeito)) {
+                for (int i = 0; i < 2; i++) {
+                    if (efeitos[i] != null) {
+                        if (efeitos[i].getId() == efeito.getId()) {
+                            efeitos[i] = null;
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -59,10 +87,15 @@ public class SalaCaminho extends SalaBasica{
 
     @Override
     public void addInimigo(Inimigo inimigo) {
-        if(enemies.contains(inimigo, true)) {
-            enemies.add(inimigo);
+        boolean jaExiste = false;
+        for (Iterator<Inimigo> it = enemies.iterator(); it.hasNext();) {
+            Inimigo enemie = it.next();
+            if (enemie == inimigo) {
+                jaExiste = true;
+            }
         }
-
+        if(!jaExiste)
+            enemies.add(inimigo);
     }
 
     @Override

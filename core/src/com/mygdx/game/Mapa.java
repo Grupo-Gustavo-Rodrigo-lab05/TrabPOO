@@ -21,7 +21,7 @@ public class Mapa extends ApplicationAdapter{
                     if(j == 1 || j == 3){
                         salas[i][j] = new SalaTorre(i, j, new TorreVazia(i, j));
                     }
-                    else if((j == 2 || j == 4) && i == 1 || i == 5){
+                    else if((j == 2 || j == 4) && (i == 1 || i == 5)){
                         salas[i][j] = new SalaPedra(i, j);
                     }
                     else if((j == 0 || j == 2) && i == 3){

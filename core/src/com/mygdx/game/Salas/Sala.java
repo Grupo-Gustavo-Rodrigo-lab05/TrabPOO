@@ -27,4 +27,6 @@ public interface Sala {
     void remove();
 
     Rectangle getRec();
+    public void retiraEfeito(Efeito efeito);
+    public void darDano();
 }

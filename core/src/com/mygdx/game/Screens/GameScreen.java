@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -25,7 +26,8 @@ import com.mygdx.game.Mapa;
 import java.util.Iterator;
 
 public class GameScreen  implements Screen, InputProcessor {
-    Texture enemyImg, pauseImg;
+    Texture pauseImg;
+    private int ouro = 0;
     TiledMap tiledMap;
     OrthographicCamera camera;
     TiledMapRenderer tiledMapRenderer;
@@ -33,18 +35,18 @@ public class GameScreen  implements Screen, InputProcessor {
     private SpriteBatch batch;
     public Mapa mapa;
     FitViewport viewport;
-    Vector3 touchPosition;
+    private static Vector3 touchPosition;
     private Array<Inimigo> enemies;
     private long lastDropTime;
     private static boolean paused;
     private long instantPaused;
     private long timePausedDelay;
     public static boolean fechouMercado;
-
+    private BitmapFont fonte;
+    int contador1 = 0;
     public GameScreen(final Renderizador game, Mapa mapa){
         this.game = game;
         this.mapa = mapa;
-        enemyImg = new Texture("inimigo1.png");
         pauseImg = new Texture("Pause.png");
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
@@ -57,13 +59,17 @@ public class GameScreen  implements Screen, InputProcessor {
         touchPosition = new Vector3();
         Gdx.input.setInputProcessor(this);
         enemies = new Array<Inimigo>();
+        fonte = new BitmapFont();
         spawnEnemies();
-
         int contador = 0;
         if(contador == 0){
             ligaSalas();
             contador++;
         }
+    }
+
+    public static void resetTouchPosition(){
+        touchPosition.set(0,0,0);
     }
     public void ligaSalas(){
         //ARRUMAR ESSA LOGICA//
@@ -113,8 +119,13 @@ public class GameScreen  implements Screen, InputProcessor {
         tiledMapRenderer.render();
         game.batch.setProjectionMatrix(camera.combined);
         batch.setProjectionMatrix(camera.combined);
-        batch.begin();
 
+        batch.begin();
+        if(ouro >= 100)
+            fonte.getData().setScale(1.0f);
+        else{
+            fonte.getData().setScale(1.5f);
+        }
         //Desenha as torres
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 5; j++) {
@@ -127,9 +138,9 @@ public class GameScreen  implements Screen, InputProcessor {
 
         //Desenha os inimigos
         for (Inimigo enemie : enemies) {
-            batch.draw(enemyImg, enemie.getRec().x, enemie.getRec().y);
+            batch.draw(enemie.imagemInimigo(), enemie.getRec().x, enemie.getRec().y);
         }
-
+        fonte.draw(batch, String.valueOf(ouro), 5, 557);
         if(paused) {
             batch.draw(pauseImg, 512, 512);
             if(Gdx.input.isKeyJustPressed(Input.Keys.P) || fechouMercado) {
@@ -170,62 +181,71 @@ public class GameScreen  implements Screen, InputProcessor {
                         this.camera.unproject(touchPosition);
                     }
                     if (mapa.getSalas(i, j).getRec().contains(touchPosition.x, touchPosition.y)) {
+                        touchPosition.set(0, 0, 0);
                         instantPaused = TimeUtils.nanoTime();
                         paused = true;
                         game.setScreen(new MercadoScreen(game, mapa, i, j));
-                        touchPosition.set(0, 0, 0);
+
                     }
                 }
             }
         }
 
         //Spawn de inimigos
-        if ((TimeUtils.nanoTime() - timePausedDelay) - lastDropTime > 1000000000) {
+        if ((TimeUtils.nanoTime() - timePausedDelay) - lastDropTime > 1000000000/2) {
             spawnEnemies();
             timePausedDelay = 0;
         }
 
         for (Iterator<Inimigo> it = enemies.iterator(); it.hasNext(); ) {
             Inimigo enemie = it.next();
-            //Fazer inimigo tomando dano
+            //Fazer inimigo andando//
             if(enemie.getRec().y > 449)
-                enemie.getRec().y -= 200 * Gdx.graphics.getDeltaTime();
+                enemie.getRec().y -= enemie.getVel() * Gdx.graphics.getDeltaTime();
             else if(enemie.getRec().x > 127 && enemie.getRec().y > 321){
-                enemie.getRec().x -= 100 * Gdx.graphics.getDeltaTime();
+                enemie.getRec().x -= enemie.getVel() * Gdx.graphics.getDeltaTime();
             }
             else if(enemie.getRec().y > 321){
-                enemie.getRec().y -= 100 * Gdx.graphics.getDeltaTime();
+                enemie.getRec().y -= enemie.getVel() * Gdx.graphics.getDeltaTime();
             }
             else if(enemie.getRec().x < 383 && enemie.getRec().y > 193){
-                enemie.getRec().x += 100 * Gdx.graphics.getDeltaTime();
+                enemie.getRec().x += enemie.getVel() * Gdx.graphics.getDeltaTime();
             }
             else if(enemie.getRec().y > 193){
-                enemie.getRec().y -= 100 * Gdx.graphics.getDeltaTime();
+                enemie.getRec().y -= enemie.getVel() * Gdx.graphics.getDeltaTime();
             }
             else if(enemie.getRec().x > 127 && enemie.getRec().y > 65){
-                enemie.getRec().x -= 100 * Gdx.graphics.getDeltaTime();
+                enemie.getRec().x -= enemie.getVel() * Gdx.graphics.getDeltaTime();
             }
             else if(enemie.getRec().y > 65){
-                enemie.getRec().y -= 100 * Gdx.graphics.getDeltaTime();
+                enemie.getRec().y -= enemie.getVel() * Gdx.graphics.getDeltaTime();
             }
             else if(enemie.getRec().x < 383 ){
-                enemie.getRec().x += 100 * Gdx.graphics.getDeltaTime();
+                enemie.getRec().x += enemie.getVel() * Gdx.graphics.getDeltaTime();
             }
         }
 
         //Ver em qual sala esta cada inimigo
-//        for (int linha = 0; linha < 7; linha ++) {
-//            for (int coluna = 0; coluna < 5; coluna++){
-//                if(mapa.getSalas(linha, coluna).getTipo() == 'C') {
-//                    for (Iterator<Inimigo> it = enemies.iterator(); it.hasNext();) {
-//                        Inimigo enemie = it.next();
-//                        if (mapa.getSalas(linha, coluna).getRec().contains(enemie.getRec().x, enemie.getRec().y)) {
-//                            mapa.getSalas(linha, coluna).addInimigo(enemie);
-//                        }
-//                    }
-//                }
-//            }
-//        }
+        for (int linha = 0; linha < 7; linha ++) {
+            for (int coluna = 0; coluna < 5; coluna++){
+                if(mapa.getSalas(linha, coluna).getTipo() == 'C') {
+                    for (Iterator<Inimigo> it = enemies.iterator(); it.hasNext();) {
+                        Inimigo enemie = it.next();
+                        if (mapa.getSalas(linha, coluna).getRec().contains(enemie.getRec().x, enemie.getRec().y)) {
+                            mapa.getSalas(linha, coluna).addInimigo(enemie);
+                            mapa.getSalas(linha, coluna).darDano();
+                            if(enemie.morre()){
+                                it.remove();
+                                enemie.imagemInimigo().dispose();
+                                ouro++;
+
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         //Verifica se o mercado ou o inventário foi aberto
         for (MapObject object : tiledMap.getLayers().get("telas").getObjects()) {
@@ -274,7 +294,14 @@ public class GameScreen  implements Screen, InputProcessor {
 
     @Override
     public void dispose() {
-
+        tiledMap.dispose();
+        for(int i = 0; i < 7; i ++){
+            for(int j = 0; j < 5; j ++){
+                if(mapa.getSalas(i, j).getTipo()=='T'){
+                    mapa.getSalas(i, j).getTorre().imagemTorre().dispose();
+                }
+            }
+        }
     }
 
 

@@ -21,17 +21,17 @@ public class SalaPedra extends SalaCaminho{
         tipo = 'C';
     }
 
-    public void adicionaEfeito(Efeito efeito) {
-        if(tipo == 'C') {
-            if (!possuiEfeito(efeito)) {
-                int i = 0;
-                while (efeitos[i] != null) { //Encontra o primeiro índice vazio no vetor
-                    i++;
-                }
-                efeitos[i] = efeito;
-            }
-        }
-    }
+//    public void adicionaEfeito(Efeito efeito) {
+//        if(tipo == 'C') {
+//            if (!possuiEfeito(efeito)) {
+//                int i = 0;
+//                while (efeitos[i] != null) { //Encontra o primeiro índice vazio no vetor
+//                    i++;
+//                }
+//                efeitos[i] = efeito;
+//            }
+//        }
+//    }
     public void setRec(Rectangle rec){}
 
     @Override
