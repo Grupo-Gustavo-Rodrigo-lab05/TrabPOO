@@ -50,7 +50,6 @@ public class GameScreen  implements Screen, InputProcessor {
     public GameScreen(final Renderizador game, Mapa mapa){
         this.game = game;
         this.mapa = mapa;
-        pauseImg = new Texture("Pause.png");
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
         camera = new OrthographicCamera();
@@ -58,6 +57,7 @@ public class GameScreen  implements Screen, InputProcessor {
         batch = new SpriteBatch();
         camera.update();
         tiledMap = new TmxMapLoader().load("MyCrappyMap.tmx");
+        pauseImg = new Texture("Pause.png");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         touchPosition = new Vector3();
         Gdx.input.setInputProcessor(this);
@@ -95,13 +95,13 @@ public class GameScreen  implements Screen, InputProcessor {
         ouro -= valorGasto;
     }
 
-    public static void resetTouchPosition(){
+    public static void resetTouchPosition() {
         touchPosition.set(0,0,0);
     }
 
-    public void ligaSalas(){
+    public void ligaSalas() {
         //ARRUMAR ESSA LOGICA//
-        String linha ;
+        String linha;
         String coluna;
         for(int i = 0; i < 7; i++) {
             for (int j = 0; j < 5; j++) {
@@ -134,30 +134,30 @@ public class GameScreen  implements Screen, InputProcessor {
         if (ondasI < 10) {
             for (MapObject object : tiledMap.getLayers().get("Spawn").getObjects()) {
                 Rectangle Spawn = ((RectangleMapObject) object).getRectangle();
-                Inimigo enemie;
+                Inimigo enemy;
                 if (ondas[ondasI][ondasJ] == 'F') {
-                    enemie = new InimigoFaca();
+                    enemy = new InimigoFaca();
                     incrementaOndas();
                 } else if (ondas[ondasI][ondasJ] == 'M') {
-                    enemie = new InimigoMorcego();
+                    enemy = new InimigoMorcego();
                     incrementaOndas();
                 } else if (ondas[ondasI][ondasJ] == 'A') {
-                    enemie = new InimigoArmadura();
+                    enemy = new InimigoArmadura();
                     incrementaOndas();
                 } else if (ondas[ondasI][ondasJ] == 'O') {
-                    enemie = new InimigoOgro();
+                    enemy = new InimigoOgro();
                     incrementaOndas();
                 } else if (ondas[ondasI][ondasJ] == 'G') {
-                    enemie = new InimigoGolem();
+                    enemy = new InimigoGolem();
                     incrementaOndas();
                 } else {
-                    enemie = new InimigoEsqueleto();
+                    enemy = new InimigoEsqueleto();
                     incrementaOndas();
                 }
-                enemie.setRec(Spawn.x, Spawn.y);
-                enemies.add(enemie);
+                enemy.setRec(Spawn.x, Spawn.y);
+                enemies.add(enemy);
                 lastDropTime = TimeUtils.nanoTime();
-                mapa.getSalas(0, 4).addInimigo(enemie);
+                mapa.getSalas(0, 4).addInimigo(enemy);
             }
         }
     }
@@ -190,8 +190,8 @@ public class GameScreen  implements Screen, InputProcessor {
         }
 
         //Desenha os inimigos
-        for (Inimigo enemie : enemies) {
-            batch.draw(enemie.imagemInimigo(), enemie.getRec().x, enemie.getRec().y);
+        for (Inimigo enemy : enemies) {
+            batch.draw(enemy.imagemInimigo(), enemy.getRec().x, enemy.getRec().y);
         }
 
         //Desenha o ouro
@@ -202,6 +202,7 @@ public class GameScreen  implements Screen, InputProcessor {
         }
         fonte.draw(batch, String.valueOf(ouro), 5, 557);
 
+        //Administra o estado do jogo (Pause)
         if(paused) {
             batch.draw(pauseImg, 512, 512);
             if(Gdx.input.isKeyJustPressed(Input.Keys.P) || fechouMercado) {
@@ -237,6 +238,7 @@ public class GameScreen  implements Screen, InputProcessor {
                             }
                         }
                     }
+                    //Vê se a casa da torre foi clicada para abrir o mercado
                     if (Gdx.input.justTouched()) {
                         touchPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
                         this.camera.unproject(touchPosition);
@@ -258,47 +260,40 @@ public class GameScreen  implements Screen, InputProcessor {
             timePausedDelay = 0;
         }
 
+        //Faz inimigos andarem
         for (Iterator<Inimigo> it = enemies.iterator(); it.hasNext(); ) {
-            Inimigo enemie = it.next();
-            //Fazer inimigo andando//
-            if(enemie.getRec().y > 449)
-                enemie.getRec().y -= enemie.getVel() * Gdx.graphics.getDeltaTime();
-            else if(enemie.getRec().x > 127 && enemie.getRec().y > 321){
-                enemie.getRec().x -= enemie.getVel() * Gdx.graphics.getDeltaTime();
-            }
-            else if(enemie.getRec().y > 321){
-                enemie.getRec().y -= enemie.getVel() * Gdx.graphics.getDeltaTime();
-            }
-            else if(enemie.getRec().x < 383 && enemie.getRec().y > 193){
-                enemie.getRec().x += enemie.getVel() * Gdx.graphics.getDeltaTime();
-            }
-            else if(enemie.getRec().y > 193){
-                enemie.getRec().y -= enemie.getVel() * Gdx.graphics.getDeltaTime();
-            }
-            else if(enemie.getRec().x > 127 && enemie.getRec().y > 65){
-                enemie.getRec().x -= enemie.getVel() * Gdx.graphics.getDeltaTime();
-            }
-            else if(enemie.getRec().y > 65){
-                enemie.getRec().y -= enemie.getVel() * Gdx.graphics.getDeltaTime();
-            }
-            else if(enemie.getRec().x < 383 ){
-                enemie.getRec().x += enemie.getVel() * Gdx.graphics.getDeltaTime();
-            }
+            Inimigo enemy = it.next();
+            if(enemy.getRec().y > 449)
+                enemy.getRec().y -= enemy.getVel() * Gdx.graphics.getDeltaTime();
+            else if(enemy.getRec().x > 127 && enemy.getRec().y > 321)
+                enemy.getRec().x -= enemy.getVel() * Gdx.graphics.getDeltaTime();
+            else if(enemy.getRec().y > 321)
+                enemy.getRec().y -= enemy.getVel() * Gdx.graphics.getDeltaTime();
+            else if(enemy.getRec().x < 383 && enemy.getRec().y > 193)
+                enemy.getRec().x += enemy.getVel() * Gdx.graphics.getDeltaTime();
+            else if(enemy.getRec().y > 193)
+                enemy.getRec().y -= enemy.getVel() * Gdx.graphics.getDeltaTime();
+            else if(enemy.getRec().x > 127 && enemy.getRec().y > 65)
+                enemy.getRec().x -= enemy.getVel() * Gdx.graphics.getDeltaTime();
+            else if(enemy.getRec().y > 65)
+                enemy.getRec().y -= enemy.getVel() * Gdx.graphics.getDeltaTime();
+            else if(enemy.getRec().x < 383 )
+                enemy.getRec().x += enemy.getVel() * Gdx.graphics.getDeltaTime();
         }
 
-        //Ver em qual sala está cada inimigo
+        //Dá dano nos inimigos
         for (int linha = 0; linha < 7; linha ++) {
             for (int coluna = 0; coluna < 5; coluna++){
                 if(mapa.getSalas(linha, coluna).getTipo() == 'C') {
                     for (Iterator<Inimigo> it = enemies.iterator(); it.hasNext();) {
-                        Inimigo enemie = it.next();
-                        if (mapa.getSalas(linha, coluna).getRec().contains(enemie.getRec().x, enemie.getRec().y)) {
-                            mapa.getSalas(linha, coluna).addInimigo(enemie);
+                        Inimigo enemy = it.next();
+                        if (mapa.getSalas(linha, coluna).getRec().contains(enemy.getRec().x, enemy.getRec().y)) {
+                            mapa.getSalas(linha, coluna).addInimigo(enemy);
                             mapa.getSalas(linha, coluna).darDano();
-                            if(enemie.morre()){
+                            if(enemy.morre()){
                                 it.remove();
-                                enemie.imagemInimigo().dispose();
-                                ouro += enemie.getGoldDrop();
+                                enemy.imagemInimigo().dispose();
+                                ouro += enemy.getGoldDrop();
                             }
                         }
                     }
@@ -323,8 +318,8 @@ public class GameScreen  implements Screen, InputProcessor {
 
         //Termina o jogo se um inimigo chegou no tesouro
         for (Iterator<Inimigo> it = enemies.iterator(); it.hasNext();) {
-            Inimigo enemie = it.next();
-            if(enemie.getRec().y < 130 && enemie.getRec().x > 380) {
+            Inimigo enemy = it.next();
+            if(enemy.getRec().y < 130 && enemy.getRec().x > 380) {
                 System.exit(0);
             }
         }
