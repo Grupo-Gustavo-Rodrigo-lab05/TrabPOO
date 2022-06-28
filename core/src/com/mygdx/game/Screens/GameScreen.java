@@ -74,6 +74,7 @@ public class GameScreen implements Screen, InputProcessor {
             paused = true;
             tutorial = true;
         }
+
         //Organiza as ondas de inimigos
         ondasI = 0;
         ondasJ = 0;
