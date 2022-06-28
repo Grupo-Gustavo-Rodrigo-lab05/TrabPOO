@@ -22,7 +22,8 @@ public class MainMenuScreen implements Screen {
         private TiledMapRenderer tiledMapRenderer;
         private Vector3 touchPosition;
         private static GameScreen telaJogo;
-
+        private Rectangle botaoPlay;
+        private Rectangle botaoTut;
         public MainMenuScreen(final Renderizador game, Mapa mapa){
                 this.game = game;
                 this.mapa = mapa;
@@ -36,6 +37,9 @@ public class MainMenuScreen implements Screen {
                 tiledMap = new TmxMapLoader().load("Menu.tmx");
                 tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
                 touchPosition = new Vector3();
+                botaoPlay = ((RectangleMapObject) tiledMap.getLayers().get("Botoes").getObjects().get("Play")).getRectangle();
+                botaoTut = ((RectangleMapObject) tiledMap.getLayers().get("Botoes").getObjects().get("Tutorial")).getRectangle();
+
         }
 
         public static GameScreen getTelaJogo() {
@@ -53,18 +57,19 @@ public class MainMenuScreen implements Screen {
                 tiledMapRenderer.render();
 
                 //Verifica se os botões são clicados e passa para a GameScreen
-                for (MapObject object : tiledMap.getLayers().get("Botoes").getObjects()) {
-                        Rectangle rec = ((RectangleMapObject) object).getRectangle();
-                        touchPosition = new Vector3();
+
                         if(Gdx.input.justTouched()){
                                 touchPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
                                 this.camera.unproject(touchPosition);
                         }
-                        if(rec.contains(touchPosition.x, touchPosition.y)) {
-                                telaJogo = new GameScreen(game, mapa);
+                        if(botaoPlay.contains(touchPosition.x, touchPosition.y)) {
+                                telaJogo = new GameScreen(game, mapa, false);
                                 game.setScreen(telaJogo);
                         }
-                }
+                        if(botaoTut.contains(touchPosition.x,touchPosition.y)){
+                                telaJogo = new GameScreen(game, mapa, true);
+                                game.setScreen(telaJogo);
+                        }
         }
 
         @Override

@@ -31,14 +31,15 @@ public class MercadoScreen implements Screen {
     private Texture imgComprar;
     int x;
     int y;
-    Rectangle botao1, botao2, botao3, botao4, sairButton;
-
-    public MercadoScreen(final Renderizador game, Mapa mapa, int x, int y) {
+    Rectangle botao1, botao2, botao3, botao4, sairButton, tutorialRec;
+    private boolean tut;
+    private Texture seta;
+    public MercadoScreen(final Renderizador game, Mapa mapa, int x, int y, boolean tutorial) {
         this.game = game;
         this.mapa = mapa;
         this.x = x;
         this.y = y;
-
+        tut = tutorial;
         //Inicializa mapa e câmera
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
@@ -48,13 +49,15 @@ public class MercadoScreen implements Screen {
         camera.setToOrtho(false,w,h);
         camera.update();
         tiledMap = new TmxMapLoader().load("Mercado.tmx");
-
+        seta = new Texture("Seta.png");
         //Inicializa botões do menu mercado
         botao1 = ((RectangleMapObject) tiledMap.getLayers().get("botoes").getObjects().get("botao1")).getRectangle();
         botao2 = ((RectangleMapObject) tiledMap.getLayers().get("botoes").getObjects().get("botao2")).getRectangle();
         botao3 = ((RectangleMapObject) tiledMap.getLayers().get("botoes").getObjects().get("botao3")).getRectangle();
         botao4 = ((RectangleMapObject) tiledMap.getLayers().get("botoes").getObjects().get("botao4")).getRectangle();
         sairButton = ((RectangleMapObject) tiledMap.getLayers().get("sair").getObjects().get("sair")).getRectangle();
+        tutorialRec = ((RectangleMapObject) tiledMap.getLayers().get("Tutorial").getObjects().get("tutorial")).getRectangle();
+
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         batch = new SpriteBatch();
     }
@@ -81,7 +84,9 @@ public class MercadoScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-
+        if(tut){
+            batch.draw(seta, tutorialRec.x,tutorialRec.y);
+        }
         //Renderiza os botões de comprar
         for (MapObject object : tiledMap.getLayers().get("botoes").getObjects()) {
             Rectangle rec1 = ((RectangleMapObject) object).getRectangle();

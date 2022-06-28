@@ -16,7 +16,7 @@
 </data>
  </layer>
  <objectgroup id="2" name="Botoes">
-  <object id="1" x="230" y="276" width="147" height="63"/>
-  <object id="2" x="230" y="362" width="149" height="65"/>
+  <object id="1" name="Play" x="230" y="276" width="147" height="63"/>
+  <object id="2" name="Tutorial" x="230" y="362" width="149" height="65"/>
  </objectgroup>
 </map>

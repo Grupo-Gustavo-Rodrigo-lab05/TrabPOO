@@ -37,6 +37,7 @@ public class GameScreen implements Screen, InputProcessor {
     private Array<InimigoBasico> enemies;
     private long lastDropTime;
     private static boolean paused;
+    private static boolean tutorial;
     private long instantPaused;
     private long timePausedDelay;
     public static boolean fechouMercado;
@@ -45,8 +46,10 @@ public class GameScreen implements Screen, InputProcessor {
     private int ondasI;
     private int ondasJ;
     private boolean trocouOnda;
-
-    public GameScreen(final Renderizador game, Mapa mapa) {
+    private Texture tutorialImg;
+    private Texture setImg;
+    private int tutCont;
+    public GameScreen(final Renderizador game, Mapa mapa, boolean tut) {
         this.game = game;
         this.mapa = mapa;
         float w = Gdx.graphics.getWidth();
@@ -64,7 +67,13 @@ public class GameScreen implements Screen, InputProcessor {
         fonte = new BitmapFont();
         fonte.setColor(0, 0, 0, 1);
         ouro = 35; //Quantidade de ouro inicial]
-
+        tutorialImg = new Texture("tutorial1.png");
+        setImg = new Texture("Seta.png");
+        tutCont = 0;
+        if(tut){
+            paused = true;
+            tutorial = true;
+        }
         //Organiza as ondas de inimigos
         ondasI = 0;
         ondasJ = 0;
@@ -146,6 +155,7 @@ public class GameScreen implements Screen, InputProcessor {
                 enemies.add(enemy);
                 lastDropTime = TimeUtils.nanoTime();
                 mapa.getSalas(0, 4).adicionaInimigo(enemy);
+                tutorial = false;
             }
         }
     }
@@ -201,17 +211,63 @@ public class GameScreen implements Screen, InputProcessor {
         //Administra o estado do jogo (Pause)
         if(paused) {
             batch.draw(pauseImg, 512, 512);
-            if(Gdx.input.isKeyJustPressed(Input.Keys.P) || fechouMercado) {
-                timePausedDelay = TimeUtils.nanoTime() - instantPaused;
-                paused = false;
-                fechouMercado = false;
+            if(!tutorial) {
+                if (Gdx.input.isKeyJustPressed(Input.Keys.P) || fechouMercado) {
+                    timePausedDelay = TimeUtils.nanoTime() - instantPaused;
+                    paused = false;
+                    fechouMercado = false;
+                }
             }
-        } else {
+            else{
+                Rectangle mago = ((RectangleMapObject) tiledMap.getLayers().get("Tutorial").getObjects().get("mago")).getRectangle();
+                Rectangle seta = ((RectangleMapObject) tiledMap.getLayers().get("Tutorial").getObjects().get("seta")).getRectangle();
+                Rectangle casa = ((RectangleMapObject) tiledMap.getLayers().get("objetos").getObjects().get("11")).getRectangle();
+                if(tutCont < 4) {
+                    batch.draw(tutorialImg, mago.x, mago.y);
+                    if (Gdx.input.justTouched() && tutCont == 0) {
+                        tutorialImg = new Texture("tutorial2.png");
+                        tutCont = 1;
+                    } else if (Gdx.input.justTouched() && tutCont == 1) {
+                        tutorialImg = new Texture("tutorial3.png");
+                        tutCont = 2;
+                    } else if (Gdx.input.justTouched() && tutCont == 2) {
+                        tutorialImg = new Texture("tutorial4.png");
+                        tutCont = 3;
+                    } else if(Gdx.input.justTouched() && tutCont == 3){
+                        tutCont = 4;
+                    }
+                }
+                if( tutCont == 4){
+                    tutorialImg = new Texture("Seta.png");
+                    batch.draw(tutorialImg, seta.x, seta.y);
+                }
+                if(tutCont == 4 && Gdx.input.justTouched()){
+                    touchPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+                    this.camera.unproject(touchPosition);
+                    if (casa.contains(touchPosition.x, touchPosition.y)) {
+                        touchPosition.set(0, 0, 0);
+                        tutCont = 5;
+                        game.setScreen(new MercadoScreen(game, mapa, 1, 1, true));
+                    }
+                }
+                else if(tutCont == 5 ){
+                    tutorialImg = new Texture("tutorial5.png");
+                    batch.draw(tutorialImg, mago.x, mago.y);
+                    if(Gdx.input.justTouched()){
+                        tutCont = 6;
+                    }
+                }
+                if( tutCont == 6){
+                    paused = false;
+                }
+            }
+        }
+        else {
             generalUpdate();
         }
 
         //Retoma o spawn de inimigos quando o último inimigo da última onda morre
-        if (enemies.isEmpty()) {
+        if (enemies.isEmpty() && !tutorial) {
             ondasI++;
             trocouOnda = false;
         }
@@ -249,7 +305,7 @@ public class GameScreen implements Screen, InputProcessor {
                         touchPosition.set(0, 0, 0);
                         instantPaused = TimeUtils.nanoTime();
                         paused = true;
-                        game.setScreen(new MercadoScreen(game, mapa, i, j));
+                        game.setScreen(new MercadoScreen(game, mapa, i, j, false));
 
                     }
                 }
