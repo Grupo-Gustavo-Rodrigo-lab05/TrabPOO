@@ -3,7 +3,7 @@
 # Descrição Resumida do Projeto/Jogo
 O jogo consiste em um arcade do tipo TowerDefense, em que o jogador deve enfrentar hordas de inimigos e impedir que cheguem em seu tesouro. Para fazer isso, ele pode
 comprar torres de defesa, que nesse jogo são representados como Golems, e elas irão atacar os inimigos. Ouro é ganho a cada inimigo morto e é usado para comprar mais
-torres. Assim, o jogador  deve  sobreviver 20 ondas e derrotar 2 inimigos do tipo Boss para vencer.
+torres. Assim, o jogador  deve  sobreviver 10 ondas e derrotar 2 inimigos do tipo Boss para vencer.
 
 # Equipe
 * `Gustavo Molino Teixeira Alves` - `247144`
