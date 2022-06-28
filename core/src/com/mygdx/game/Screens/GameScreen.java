@@ -270,6 +270,14 @@ public class GameScreen implements Screen, InputProcessor {
         if (enemies.isEmpty() && !tutorial) {
             ondasI++;
             trocouOnda = false;
+            if (ondasI == 10) { //Se o último boss morreu vence o jogo
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    System.out.println(e);
+                }
+                game.setScreen(new WinScreen(game, mapa));
+            }
         }
 
         batch.end();
@@ -371,7 +379,7 @@ public class GameScreen implements Screen, InputProcessor {
                 } catch (InterruptedException e) {
                     System.out.println(e);
                 }
-                System.exit(0);
+                game.setScreen(new LoseScreen(game, mapa));
             }
         }
     }
