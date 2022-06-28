@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 //Segundo Boss Esqueleto - Vida muito alta e velocidade baixa
 public class InimigoEsqueleto extends InimigoBasico {
     public InimigoEsqueleto() {
-        vida = 15000;
+        vida = 17500;
         velocidade = 40;
         goldDrop = 50;
         create();

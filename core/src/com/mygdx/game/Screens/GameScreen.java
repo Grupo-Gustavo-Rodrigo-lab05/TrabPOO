@@ -44,6 +44,7 @@ public class GameScreen implements Screen, InputProcessor {
     private char[][] ondas;
     private int ondasI;
     private int ondasJ;
+    private boolean trocouOnda;
 
     public GameScreen(final Renderizador game, Mapa mapa) {
         this.game = game;
@@ -62,7 +63,7 @@ public class GameScreen implements Screen, InputProcessor {
         enemies = new Array<InimigoBasico>();
         fonte = new BitmapFont();
         fonte.setColor(0, 0, 0, 1);
-        ouro = 35; //Quantidade de ouro inicial
+        ouro = 35; //Quantidade de ouro inicial]
 
         //Organiza as ondas de inimigos
         ondasI = 0;
@@ -78,7 +79,6 @@ public class GameScreen implements Screen, InputProcessor {
                               {'O', 'O', 'O', 'O', 'M', 'O', 'O', 'O', 'O', 'M'},
                               {'O', 'A', 'O', 'A', 'F', 'M', 'F', 'M', 'O', 'O', 'A', 'A', 'E'}}; //Segundo Boss 'Esqueleto'
 
-        spawnEnemies();
         ligaSalas();
     }
 
@@ -119,7 +119,7 @@ public class GameScreen implements Screen, InputProcessor {
         if (ondasJ + 1 < ondas[ondasI].length)
             ondasJ++;
         else {
-            ondasI++;
+            trocouOnda = true;
             ondasJ = 0;
         }
     }
@@ -210,6 +210,12 @@ public class GameScreen implements Screen, InputProcessor {
             generalUpdate();
         }
 
+        //Retoma o spawn de inimigos quando o último inimigo da última onda morre
+        if (enemies.isEmpty()) {
+            ondasI++;
+            trocouOnda = false;
+        }
+
         batch.end();
     }
 
@@ -251,7 +257,7 @@ public class GameScreen implements Screen, InputProcessor {
         }
 
         //Spawn de inimigos
-        if ((TimeUtils.nanoTime() - timePausedDelay) - lastDropTime > 1000000000) {
+        if ((TimeUtils.nanoTime() - timePausedDelay) - lastDropTime > 1000000000 && !trocouOnda) {
             spawnEnemies();
             timePausedDelay = 0;
         }
@@ -304,6 +310,11 @@ public class GameScreen implements Screen, InputProcessor {
         for (Iterator<InimigoBasico> it = enemies.iterator(); it.hasNext();) {
             InimigoBasico enemy = it.next();
             if(enemy.getRec().y < 130 && enemy.getRec().x > 380) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    System.out.println(e);
+                }
                 System.exit(0);
             }
         }
