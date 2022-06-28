@@ -16,10 +16,10 @@ torres. Assim, o jogador  deve  sobreviver 10 ondas e derrotar 2 inimigos do tip
 # Slides do Projeto
 
 ## Slides da Prévia
-[Slides Prévia](https://github.com/Grupo-Gustavo-Rodrigo-lab05/TrabPOO/blob/main/assets/Apresentação prévia.pptx)
+[Slides Prévia](https://github.com/Grupo-Gustavo-Rodrigo-lab05/TrabPOO/blob/main/assets/ApresentaçãoPrévia.pptx)
 
 ## Slides da Apresentação Final
-[Slides Final](https://github.com/Grupo-Gustavo-Rodrigo-lab05/TrabPOO/blob/main/assets/Apresentação final.pptx)
+[Slides Final](https://github.com/Grupo-Gustavo-Rodrigo-lab05/TrabPOO/blob/main/assets/ApresentaçãoFinal.pptx)
 
 # Diagramas
 
