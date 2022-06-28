@@ -19,7 +19,7 @@ torres. Assim, o jogador  deve  sobreviver 20 ondas e derrotar 2 inimigos do tip
 [Slides Prévia](https://docs.google.com/presentation/d/1FAfc41f_BiKBW-MAYzzS7rZ_NEAFLm_22_-rIQ3pCoQ/edit#slide=id.p1)
 
 ## Slides da Apresentação Final
-> Coloque um link para os slides da apresentação final do projeto.
+[Slides Final](https://docs.google.com/presentation/d/1igZtq5jSERzUEoZepifXjsIkISeQ6zio/edit?usp=sharing&ouid=106567199866680295185&rtpof=true&sd=true)
 
 # Diagramas
 
