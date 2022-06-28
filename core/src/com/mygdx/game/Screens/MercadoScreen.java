@@ -133,28 +133,28 @@ public class MercadoScreen implements Screen {
         if (botao1.contains(touchPosition.x, touchPosition.y) && MainMenuScreen.getTelaJogo().getOuro() >= 60) {
             removeEfeito();
             mapa.getSalas(x, y).setTorre(new TorreFogo(x, y));
-            MainMenuScreen.getTelaJogo().gastaOuro(60);
+            jogoAtual.gastaOuro(60);
             GameScreen.fechouMercado = true;
             game.setScreen(jogoAtual);
         }
         if (botao2.contains(touchPosition.x, touchPosition.y) && MainMenuScreen.getTelaJogo().getOuro() >= 40) {
             removeEfeito();
             mapa.getSalas(x, y).setTorre(new TorrePedra(x, y));
-            MainMenuScreen.getTelaJogo().gastaOuro(40);
+            jogoAtual.gastaOuro(40);
             GameScreen.fechouMercado = true;
             game.setScreen(jogoAtual);
         }
         if (botao3.contains(touchPosition.x, touchPosition.y) && MainMenuScreen.getTelaJogo().getOuro() >= 20) {
             removeEfeito();
             mapa.getSalas(x, y).setTorre(new TorreGelo(x, y));
-            MainMenuScreen.getTelaJogo().gastaOuro(20);
+            jogoAtual.gastaOuro(20);
             GameScreen.fechouMercado = true;
             game.setScreen(jogoAtual);
         }
         if (botao4.contains(touchPosition.x, touchPosition.y) && MainMenuScreen.getTelaJogo().getOuro() >= 10) {
             removeEfeito();
             mapa.getSalas(x, y).setTorre(new TorreAreia(x, y));
-            MainMenuScreen.getTelaJogo().gastaOuro(10);
+            jogoAtual.gastaOuro(10);
             GameScreen.fechouMercado = true;
             game.setScreen(jogoAtual);
         }
