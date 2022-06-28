@@ -16,13 +16,13 @@ torres. Assim, o jogador  deve  sobreviver 10 ondas e derrotar 2 inimigos do tip
 # Slides do Projeto
 
 ## Slides da Prévia
-[Slides Prévia](https://docs.google.com/presentation/d/1FAfc41f_BiKBW-MAYzzS7rZ_NEAFLm_22_-rIQ3pCoQ/edit#slide=id.p1)
+[Slides Prévia](https://github.com/Grupo-Gustavo-Rodrigo-lab05/TrabPOO/blob/main/assets/Apresentação prévia.pptx)
 
 ## Slides da Apresentação Final
-[Slides Final](https://docs.google.com/presentation/d/1igZtq5jSERzUEoZepifXjsIkISeQ6zio/edit?usp=sharing&ouid=106567199866680295185&rtpof=true&sd=true)
+[Slides Final](https://github.com/Grupo-Gustavo-Rodrigo-lab05/TrabPOO/blob/main/assets/Apresentação final.pptx)
 
 # Diagramas
 
 ## Diagrama Geral da Arquitetura do Jogo
+![Arquitetura](https://user-images.githubusercontent.com/101989884/176222653-ccb56d40-f078-4be6-8d60-1c398627fe47.png)
 
-> Apresente um diagrama geral da arquitetura do jogo. O formato é livre. A escolha de um ou mais estilos arquiteturais será considerado um diferencial.
