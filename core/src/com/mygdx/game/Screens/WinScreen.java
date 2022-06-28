@@ -4,13 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.Mapa;
 
 public class WinScreen implements Screen {
@@ -19,8 +16,6 @@ public class WinScreen implements Screen {
     private TiledMap tiledMap;
     private OrthographicCamera camera;
     private TiledMapRenderer tiledMapRenderer;
-    private Vector3 touchPosition;
-    Rectangle botaoMenu, botaoJogarDenovo;
 
     public WinScreen(final Renderizador game, Mapa mapa) {
         this.game = game;
@@ -32,11 +27,8 @@ public class WinScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, w, h);
         camera.update();
-        tiledMap = new TmxMapLoader().load("WinScreen.tmx");
+        tiledMap = new TmxMapLoader().load("Vitoria.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
-        touchPosition = new Vector3();
-        botaoMenu = ((RectangleMapObject) tiledMap.getLayers().get("Botoes").getObjects().get("Menu")).getRectangle();
-        botaoJogarDenovo = ((RectangleMapObject) tiledMap.getLayers().get("Botoes").getObjects().get("JogarDeNovo")).getRectangle();
     }
 
     @Override
@@ -49,15 +41,10 @@ public class WinScreen implements Screen {
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
 
-        //Verifica se os botões são clicados e passa para a GameScreen
+        //Verifica se o usuário apertou o mouse e fecha o jogo
         if(Gdx.input.justTouched()){
-            touchPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-            this.camera.unproject(touchPosition);
+            System.exit(0);
         }
-        if(botaoMenu.contains(touchPosition.x, touchPosition.y))
-            game.setScreen(new MainMenuScreen(game, mapa));
-        if(botaoJogarDenovo.contains(touchPosition.x,touchPosition.y))
-            game.setScreen(new GameScreen(game, mapa, false));
     }
 
     @Override

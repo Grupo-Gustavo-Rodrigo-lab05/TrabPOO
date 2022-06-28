@@ -375,7 +375,7 @@ public class GameScreen implements Screen, InputProcessor {
             InimigoBasico enemy = it.next();
             if(enemy.getRec().y < 130 && enemy.getRec().x > 380) {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     System.out.println(e);
                 }
