@@ -29,7 +29,10 @@ public class MercadoScreen implements Screen {
     private TiledMapRenderer tiledMapRenderer;
     private Vector3 touchPosition;
     private SpriteBatch batch;
-    private Texture imgComprar;
+    private Texture imgComprar60;
+    private Texture imgComprar40;
+    private Texture imgComprar20;
+    private Texture imgComprar10;
     private BitmapFont fonte;
     private int ouro;
     int x;
@@ -51,7 +54,10 @@ public class MercadoScreen implements Screen {
         //Inicializa mapa e câmera
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
-        imgComprar = new Texture("BotaoComprar.png");
+        imgComprar60 = new Texture("BotaoComprar60.png");
+        imgComprar40 = new Texture("BotaoComprar40.png");
+        imgComprar20 = new Texture("BotaoComprar20.png");
+        imgComprar10 = new Texture("BotaoComprar10.png");
         touchPosition = new Vector3();
         camera = new OrthographicCamera();
         camera.setToOrtho(false,w,h);
@@ -106,10 +112,11 @@ public class MercadoScreen implements Screen {
         fonte.draw(batch, String.valueOf(ouro), 5, 557);
 
         //Renderiza os botões de comprar
-        for (MapObject object : tiledMap.getLayers().get("botoes").getObjects()) {
-            Rectangle rec1 = ((RectangleMapObject) object).getRectangle();
-            batch.draw(imgComprar, rec1.x, rec1.y);
-        }
+        batch.draw(imgComprar60, botao1.x, botao1.y);
+        batch.draw(imgComprar40, botao2.x, botao2.y);
+        batch.draw(imgComprar20, botao3.x, botao3.y);
+        batch.draw(imgComprar10, botao4.x, botao4.y);
+
         batch.end();
         GameScreen.resetTouchPosition();
 
