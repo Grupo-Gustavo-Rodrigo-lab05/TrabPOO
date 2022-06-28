@@ -11,7 +11,7 @@ torres. Assim, o jogador  deve  sobreviver 10 ondas e derrotar 2 inimigos do tip
 
 # Arquivo Executável do Jogo
 
-> Coloque aqui um link para download do arquivo `jar` ou equivalente para execução do seu jogo.
+[Executável](/src/TrabPoo/desktop/build/libs)
 
 # Slides do Projeto
 
