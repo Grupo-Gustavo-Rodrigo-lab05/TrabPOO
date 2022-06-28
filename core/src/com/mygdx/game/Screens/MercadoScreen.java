@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -29,17 +30,24 @@ public class MercadoScreen implements Screen {
     private Vector3 touchPosition;
     private SpriteBatch batch;
     private Texture imgComprar;
+    private BitmapFont fonte;
+    private int ouro;
     int x;
     int y;
     Rectangle botao1, botao2, botao3, botao4, sairButton, tutorialRec;
     private boolean tut;
     private Texture seta;
-    public MercadoScreen(final Renderizador game, Mapa mapa, int x, int y, boolean tutorial) {
+
+    public MercadoScreen(final Renderizador game, Mapa mapa, int x, int y, boolean tutorial, int ouro) {
         this.game = game;
         this.mapa = mapa;
         this.x = x;
         this.y = y;
+        this.ouro = ouro;
         tut = tutorial;
+        fonte = new BitmapFont();
+        fonte.setColor(0, 0, 0, 1);
+
         //Inicializa mapa e câmera
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
@@ -50,6 +58,7 @@ public class MercadoScreen implements Screen {
         camera.update();
         tiledMap = new TmxMapLoader().load("Mercado.tmx");
         seta = new Texture("Seta.png");
+
         //Inicializa botões do menu mercado
         botao1 = ((RectangleMapObject) tiledMap.getLayers().get("botoes").getObjects().get("botao1")).getRectangle();
         botao2 = ((RectangleMapObject) tiledMap.getLayers().get("botoes").getObjects().get("botao2")).getRectangle();
@@ -87,6 +96,15 @@ public class MercadoScreen implements Screen {
         if(tut){
             batch.draw(seta, tutorialRec.x,tutorialRec.y);
         }
+
+        //Desenha o ouro do jogador
+        if(ouro >= 100)
+            fonte.getData().setScale(1.0f);
+        else{
+            fonte.getData().setScale(1.5f);
+        }
+        fonte.draw(batch, String.valueOf(ouro), 5, 557);
+
         //Renderiza os botões de comprar
         for (MapObject object : tiledMap.getLayers().get("botoes").getObjects()) {
             Rectangle rec1 = ((RectangleMapObject) object).getRectangle();

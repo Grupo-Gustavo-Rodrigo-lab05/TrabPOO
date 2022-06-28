@@ -247,7 +247,7 @@ public class GameScreen implements Screen, InputProcessor {
                     if (casa.contains(touchPosition.x, touchPosition.y)) {
                         touchPosition.set(0, 0, 0);
                         tutCont = 5;
-                        game.setScreen(new MercadoScreen(game, mapa, 1, 1, true));
+                        game.setScreen(new MercadoScreen(game, mapa, 1, 1, true, ouro));
                     }
                 }
                 else if(tutCont == 5 ){
@@ -305,7 +305,7 @@ public class GameScreen implements Screen, InputProcessor {
                         touchPosition.set(0, 0, 0);
                         instantPaused = TimeUtils.nanoTime();
                         paused = true;
-                        game.setScreen(new MercadoScreen(game, mapa, i, j, false));
+                        game.setScreen(new MercadoScreen(game, mapa, i, j, false, ouro));
 
                     }
                 }
