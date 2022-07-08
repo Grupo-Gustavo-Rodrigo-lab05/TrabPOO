@@ -98,15 +98,70 @@ Adapter Pattern Inimigos
 Adapter Pattern torres
 ![Adapter1](assets/PatternAdapterTorres.png)
 ## Código do Pattern
+> Código do Observer Pattern para dar dano nos inimigos
 ~~~java
-// Recorte do código do pattern seguindo as mesmas diretrizes de outros destaques
-public void algoInteressante(…) {
-   …
-   trechoInteressante = 100;
-}
+for (int linha = 0; linha < 7; linha ++) {
+            for (int coluna = 0; coluna < 5; coluna++) {
+                if(mapa.getSalas(linha, coluna).getTipo() == 'C') {
+                    for (Iterator<InimigoBasico> it = enemies.iterator(); it.hasNext();) {
+                        InimigoBasico enemy = it.next();
+                        if (mapa.getSalas(linha, coluna).getRec().contains(enemy.getRec().x, enemy.getRec().y)) {
+                            mapa.getSalas(linha, coluna).adicionaInimigo(enemy);
+                            mapa.getSalas(linha, coluna).darDano();
+                            if(enemy.morre()) {
+                                it.remove();
+                                enemy.getImagemInimigo().dispose();
+                                ouro += enemy.getGoldDrop();
+                            }
+                        }
+                        else {
+                            mapa.getSalas(linha, coluna).removeInimigo(enemy);
+                        }
+                    }
+                }
+            }
+        }
+~~~
+> Codigo do Observer Pattern para torres
+~~~java
+//Desenha as torres
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (mapa.getSalas(i, j).getTipo() == 'T' && mapa.getSalas(i, j).getTorre().getTorreTipo() != 'V') {
+                    batch.draw(mapa.getSalas(i, j).getTorre().getImagemTorre(), mapa.getSalas(i, j).getRec().x, mapa.getSalas(i, j).getRec().y);
+                }
+            }
+        }
+~~~
+> Código do Adapter Inimigos - Note que primeiro declaramos o Rectangle, e depois aplicamos a ele determinado inimigo especifico, sendo que qualquer inimigo pode se adaptar a ele.
+~~~java
+for (MapObject object : tiledMap.getLayers().get("Spawn").getObjects()) {
+                Rectangle Spawn = ((RectangleMapObject) object).getRectangle();
+                InimigoBasico enemy;
+                if (ondas[ondasI][ondasJ] == 'F')
+                    enemy = new InimigoFaca();
+                else if (ondas[ondasI][ondasJ] == 'M')
+                    enemy = new InimigoMorcego();
+                else if (ondas[ondasI][ondasJ] == 'A')
+                    enemy = new InimigoArmadura();
+                else if (ondas[ondasI][ondasJ] == 'O')
+                    enemy = new InimigoOgro();
+                else if (ondas[ondasI][ondasJ] == 'G')
+                    enemy = new InimigoGolem();
+                else
+                    enemy = new InimigoEsqueleto();
 ~~~
 
-> Explicação de como o pattern foi adotado e quais suas vantagens, referenciando o diagrama.
+>Código do Adapter Torres - Note que cada sala se associa a um Rectangle, e qualquer torre pode se adaptar nesse Rectangle, dependendo apenas da torre que está contidade dentro da sala
+~~~java
+for (int i = 0; i < 7; i++) {
+                for (int j = 0; j < 5; j++) {
+                    if (mapa.getSalas(i, j).getTipo() == 'T' && mapa.getSalas(i, j).getTorre().getTorreTipo() != 'V') {
+                        batch.draw(mapa.getSalas(i, j).getTorre().getImagemTorre(), mapa.getSalas(i, j).getRec().x, mapa.getSalas(i, j).getRec().y);
+                    }
+                }
+            }
+~~~
 
 # Conclusões e Trabalhos Futuros
 
