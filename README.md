@@ -196,7 +196,7 @@ O vídeo a seguir apresenta um detalhamento de um projeto baseado em componentes
 
 ## Diagrama Geral da Arquitetura do Jogo
 
-![Arquitetura](https://user-images.githubusercontent.com/101989884/176222653-ccb56d40-f078-4be6-8d60-1c398627fe47.png)
+![DiagramaGeral](Assets/DiagramaGeralComponentes.png)
 
 > Faça uma breve descrição do diagrama.
 
