@@ -83,11 +83,17 @@ public class SalaCaminho extends SalaBasica {
 ~~~~
 
 # Destaques de Pattern
-> Destaque de patterns adotados pela equipe. Sugestão de estrutura:
+> Os principais Patterns adotados pela equipe foram o Observer Pattern e o Adpater Pattern
 
 ## Diagrama do Pattern
-> Diagrama do pattern dentro do contexto da aplicação.
-
+> Observer Pattern para salas e inimigos
+Imagem 1
+> Observer Pattern para torres
+imagem 2
+> Adapter Pattern Inimigos
+Imagem 3
+> Adapter Pattern torres
+Imagem 4
 ## Código do Pattern
 ~~~java
 // Recorte do código do pattern seguindo as mesmas diretrizes de outros destaques
