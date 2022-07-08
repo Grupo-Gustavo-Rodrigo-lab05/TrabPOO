@@ -98,7 +98,7 @@ Adapter Pattern Inimigos
 Adapter Pattern torres
 ![Adapter1](assets/PatternAdapterTorres.png)
 ## Código do Pattern
-> Código do Observer Pattern para dar dano nos inimigos
+> Código do Observer Pattern para dar dano nos inimigos - A gameScreen fica o tempo todo verificando a posição dos inimigos vs a posição das salas. Caso ocorra sobreposição ela chama o método darDano da sala e dá dano nos inimigos.
 ~~~java
 for (int linha = 0; linha < 7; linha ++) {
             for (int coluna = 0; coluna < 5; coluna++) {
@@ -122,16 +122,21 @@ for (int linha = 0; linha < 7; linha ++) {
             }
         }
 ~~~
-> Codigo do Observer Pattern para torres
+> Codigo do Observer Pattern para torres - A GameScreen Verifica o tempo todo a torre que está contida naquela sala e aplica os efeitos decorrentes dessa torre.
 ~~~java
-//Desenha as torres
-        for (int i = 0; i < 7; i++) {
+for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 5; j++) {
-                if (mapa.getSalas(i, j).getTipo() == 'T' && mapa.getSalas(i, j).getTorre().getTorreTipo() != 'V') {
-                    batch.draw(mapa.getSalas(i, j).getTorre().getImagemTorre(), mapa.getSalas(i, j).getRec().x, mapa.getSalas(i, j).getRec().y);
-                }
-            }
-        }
+                if(mapa.getSalas(i, j).getTipo() == 'T') {
+                    if (mapa.getSalas(i, j).getTorre().getTorreTipo() != 'V') {
+                        for (int m = -1; m <= 1; m++) {
+                            for (int z = -1; z <= 1; z++) {
+                                if (mapa.getSalas(i + m, j + z).getTipo() == 'C' && Math.abs(m) != Math.abs(z)) {
+                                    mapa.getSalas(i + m, j + z).adicionaEfeito(mapa.getSalas(i, j).getTorre().getEfeitoTorre());
+                                    batch.draw(mapa.getSalas(i, j).getTorre().getEfeitoTorre().getImagemEfeito(), mapa.getSalas(i + m, j + z).getRec().x, mapa.getSalas(i + m, j + z).getRec().y);
+                                }
+                            }
+                        }
+                        ...
 ~~~
 > Código do Adapter Inimigos - Note que primeiro declaramos o Rectangle, e depois aplicamos a ele determinado inimigo especifico, sendo que qualquer inimigo pode se adaptar a ele.
 ~~~java
