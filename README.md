@@ -196,7 +196,7 @@ O vídeo a seguir apresenta um detalhamento de um projeto baseado em componentes
 
 ## Diagrama Geral da Arquitetura do Jogo
 
-![DiagramaGeral](assets/DiagramaGeralComponentes.png)
+![DiagramaComponentes](assets/DiagramaGeralComponentes.png)
 
 > Observa-se que possuimos 4 componentes independentes que se comunicam por meio de interfaces. A sala interagem com as torres e inimigos, enquanto que apenas a torre sabe o efeito que ela mesmo gera, interagindo com o efeito.
 
