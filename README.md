@@ -60,8 +60,21 @@ public Mapa() {
                 else
                     salas[i][j] = new SalaCaminho(i, j);
     }
-    ~~~~
-
+~~~
+Sala declarando seus efeitos e inimigos
+~~~java
+public class SalaCaminho extends SalaBasica {
+    private Array<InimigoBasico> enemies;
+    protected EfeitoBasico[] efeitos;
+    public SalaCaminho(int x, int y) {
+        super(x, y);
+        enemies = new Array<InimigoBasico>();
+        tipo = 'C';
+        this.efeitos = new EfeitoBasico[2];
+        for(int j = 0; j < 2; j++)
+            efeitos[j] = null;
+    }
+~~~
 
 ## Diagrama de Classes usada no destaque OO:
 > Sugere-se um diagrama de classes para o destaque, mas podem ser usados outros tipos de diagrama, conforme a necessidade.
