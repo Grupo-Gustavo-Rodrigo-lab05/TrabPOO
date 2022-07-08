@@ -40,7 +40,7 @@ public void algoInteressante(…) {
 # Destaques de Orientação a Objetos
 >Buscamos durante todo o código usar polimorfismo de modo que, Salas, inimigos e efeitos possuem todos um interface e uma classe abstrata, desse modo, declaramos sempre apenas a classe abstrata e instanciamos o objeto em um dos filhos de modo espeficico.
 Exemplo de declaração abstrata das salas:
-~~~~java
+~~~java
 public Mapa() {
         this.salas = new SalaBasica[9][5];
 
