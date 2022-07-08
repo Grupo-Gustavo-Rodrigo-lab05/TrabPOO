@@ -76,9 +76,9 @@ public class SalaCaminho extends SalaBasica {
     }
 ~~~
 Imagem que mostra organização das classes com Interface - Classe abstrata(Implementa Interface) - Classes filhas( Extendem a abstrata)
-![claasse](assets/image.png)
+![classe](assets/image.png)
 ## Diagrama de Classes usada no destaque OO:
-> Sugere-se um diagrama de classes para o destaque, mas podem ser usados outros tipos de diagrama, conforme a necessidade.
+![classes](assets/Diagrama em branco (5).png)
 
 ## Código do Destaque OO
 ~~~java
