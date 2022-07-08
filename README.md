@@ -86,13 +86,16 @@ public class SalaCaminho extends SalaBasica {
 > Os principais Patterns adotados pela equipe foram o Observer Pattern e o Adpater Pattern
 
 ## Diagrama do Pattern
-> Observer Pattern para salas e inimigos
+Observer Pattern para salas e inimigos
 ![Observer1](assets/PatternObserverSalas.png)
-> Observer Pattern para torres
+
+Observer Pattern para torres
 ![Observer2](assets/PatternObserverTorres.png)
-> Adapter Pattern Inimigos
+
+Adapter Pattern Inimigos
 ![Adapter1](assets/PatternAdapterInimigos.png)
-> Adapter Pattern torres
+
+Adapter Pattern torres
 ![Adapter1](assets/PatternAdapterTorres.png)
 ## Código do Pattern
 ~~~java
