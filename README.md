@@ -87,13 +87,13 @@ public class SalaCaminho extends SalaBasica {
 
 ## Diagrama do Pattern
 > Observer Pattern para salas e inimigos
-Imagem 1
+![Observer1](assets/PatternObserverSalas.png)
 > Observer Pattern para torres
-imagem 2
+![Observer2](assets/PatternObserverTorres.png)
 > Adapter Pattern Inimigos
-Imagem 3
+![Adapter1](assets/PatternAdapterInimigos.png)
 > Adapter Pattern torres
-Imagem 4
+![Adapter1](assets/PatternAdapterTorres.png)
 ## Código do Pattern
 ~~~java
 // Recorte do código do pattern seguindo as mesmas diretrizes de outros destaques
