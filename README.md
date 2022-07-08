@@ -170,7 +170,10 @@ for (int i = 0; i < 7; i++) {
 
 # Conclusões e Trabalhos Futuros
 
-> Apresente aqui as conclusões do projeto e propostas de trabalho futuro. Esta é a oportunidade em que você pode indicar melhorias no projeto a partir de lições aprendidas e conhecimentos adquiridos durante a realização do projeto, mas que não puderam ser implementadas por questões de tempo. Por exemplo, há design patterns aprendidos no final do curso que provavelmente não puderam ser implementados no jogo -- este é o espaço onde você pode apresentar como aplicaria o pattern no futuro para melhorar o jogo.
+Por fim, o grupo concluiu que conseguimos entregar um jogo satisfatório, atendendo quase completamente nossa proposta inicial. Reconhecemos que, dado mais tempo, poderíamos ter dedicado mais à aparência do jogo, deixando certas partes mais bonitas e implementando telas adaptáveis à opção de tela cheia, que é algo que nós aprendemos a fazer mas não tivemos tempo suficiente para implementar..
+Além disso, conforme trabalhávamos com a framework libgdx, adquirimos certos entendimentos e conhecimentos que, caso tivéssemos antes, poderíamos ter deixado nossa arquitetura mais elegante. O principal exemplo disso é o caso da separação entre as partes View e Controller do nosso projeto. Primeiramente, implementamos nossas Screens de modo que elas mesmas são responsáveis por monitorar e controlar as ações do jogador na tela, além do funcionamento geral do jogo, já que essa é a maneira mais simples de implementar uma tela pelo libgdx. Porém, aprendemos posteriormente que é possível criar classes que vão agir como controladores das Screens, e elas é que ficam responsáveis por administrar as ações do usuário e o decorrer do jogo. Desse modo, podemos definir mais claramente e separar melhor a View e o Controller em nossa arquitetura. Porém, ao termos feito essa descoberta, não tínhamos tempo de implementar a mudança, mas esse seria o principal ponto a melhorar para um futuro projeto.
+Por fim, gostaríamos também de termos elaborado melhor a parte de tratamento de exceções em nosso projeto. Como essa foi uma das últimas matérias aprendidas em sala, reconhecemos sua importância mas não conseguimos trabalhá-la conforme desejado. Assim, esse seria um ponto crucial de aprimoração em futuros projetos.
+
 
 # Documentação dos Componentes
 
