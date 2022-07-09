@@ -195,13 +195,13 @@ Por fim, gostaríamos também de termos elaborado melhor a parte de tratamento d
 
 
 ## Diagrama Geral de Componentes
-![DiagramaComponentes](assets/DiagramaGeralComponentes.png)
+![DiagramaComponentes](assets/DiagramaGeralComponentes.png) <br>
 Observa-se que possuimos 4 componentes independentes que se comunicam por meio de interfaces. A sala interagem com as torres e inimigos, enquanto que apenas a torre sabe o efeito que ela mesmo gera, interagindo com o efeito.
 
 
 ## Componente `Salas`
-Representa as salas do jogo, implementando a interface Sala, e com uma classa abstrata SalaBasica representando uma classe geral que será herdada por salas especificas(Caminho, Torre, pedra). Cada sala é responsavel por saber quais itens estão contidos nela (Inimigos, Efeitos e torres).
-![Sala](assets/CompSalaBasica.png)
+Representa as salas do jogo, implementando a interface Sala, e com uma classa abstrata SalaBasica representando uma classe geral que será herdada por salas especificas(Caminho, Torre, pedra). Cada sala é responsavel por saber quais itens estão contidos nela (Inimigos, Efeitos e torres). <br>
+![Sala](assets/CompSalaBasica.png) <br> <br>
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
@@ -251,7 +251,7 @@ Método | Objetivo
 
 
 ## Componente `Inimigos`
-Representa os inimigos do jogo, implementando a interface Inimigo, e com uma classe abstrata InimigoBasico que pode ser herdado por classes que representam inimigos especificos, cada um com seus respectivos atributos(vida e velocidade) e imagem gráfica
+Representa os inimigos do jogo, implementando a interface Inimigo, e com uma classe abstrata InimigoBasico que pode ser herdado por classes que representam inimigos especificos, cada um com seus respectivos atributos(vida e velocidade) e imagem gráfica.
 
 ![Sala](assets/CompInimigo.png)
 
