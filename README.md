@@ -313,7 +313,7 @@ Interfaces associadas a esse componente:
 
 ![Diagrama Interfaces](diagrama-interfaces.png)
 
-## Detalhamento das Interfaces
+## Detalhamento da Interface
 
 ### Interface `Torre`
 
@@ -352,7 +352,7 @@ Interfaces associadas a esse componente:
 
 ![Diagrama Interfaces](diagrama-interfaces.png)
 
-## Detalhamento das Interfaces
+## Detalhamento da Interface
 
 ### Interface `Efeito`
 
@@ -387,7 +387,7 @@ Interfaces associadas a esse componente:
 
 ![Diagrama Interfaces](diagrama-interfaces.png)
 
-## Detalhamento das Interfaces
+## Detalhamento da Interface
 
 ### Interface `Screen`
 
