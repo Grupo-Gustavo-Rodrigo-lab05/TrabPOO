@@ -23,18 +23,18 @@ torres. Assim, o jogador  deve  sobreviver 10 ondas e derrotar 2 inimigos do tip
 
 ## Relatório de Evolução
 
-O grupo inicialmente planejava montar um jogo que apresentaria, além de um tower defense padrão, um diferencial no qual seriam apresentadas cartas que mudariam aspectos do jogo a cada rodada, por meio de um sorteio. Contudo essa ideia foi descartada devido ao tempo para implementação do jogo, a fim de manter um jogo de tower defense mais simples porém mais consistente. <br>
-Primeiramente, buscamos montar uma arquitetura para o jogo, para que pudéssemos visualizar uma separação consistente entre o Frontend e o Backend, de modo que pudéssemos trabalhar com ambos separadamente. Contudo, para a implementação do frontend o grupo obteve a maior dificuldade, pois ambos tinham pouquíssimo conhecimento quanto a interfaces gráficas funcionais e interações com o usuário. <br>
-Buscamos então aprender sobre interfaces gráficas e métodos de implementação das mesmas sob um jogo. Depois de uma longa pesquisa, decidiu-se usar a framework libgdx para cuidar da parte gráfica do jogo de modo a facilitar a implementação do mesmo. Com isso, separamos como frontend a apresentação gráfica e interações no jogo e como backend o funcionamento consistente do jogo e lógicas do sistema em geral. <br>
-Ambos os membros do grupo buscaram então ler toda a documentação do Libgdx a fim de aprender os métodos, classes e estruturas da framework. Em meio às pesquisas, obtivemos conhecimento do sistema de TiledMap, que poderia se integrar facilmente ao Libgdx a fim de gerar e renderizar mapas de modo mais fácil, logo, facilitando a apresentação do jogo e deixando mais tempo para focarmos na orientação a objetos e lógica do jogo. <br>
-Iniciamos então a implementação do jogo, aplicando os conceitos básicos do Libgdx e criando as primeiras screens, cameras, batchs, etc. Após isso, iniciamos a criação do mapa do jogo pelo TiledMap, a fim de criar um plano de fundo para cada uma das screens que seriam renderizadas. Assim, criamos toda a parte de visualização básica do jogo, com a construção dos menus e do mapa. <br>
-Tendo feito isso, partimos para a criação do Backend do jogo, de modo a integrar a parte gráfica feita com o funcionamento, propriamente dito, do jogo. Assim, utilizando nossa arquitetura inicial, criamos e interfaces previstas como Sala, Inimigo e Efeito, e a classe Mapa, implementando seus funcionamentos conforme previsto na arquitetura e mantendo os padrões de encapsulamento que buscamos manter no nosso sistema, ou seja, a estrutura Interface, Classe Abstrata, Classes Herdeiras. <br>
-Com a implementação da parte básica do Backend, partimos para os primeiros conceitos das nossas lógicas e da integração do Backend com o Frontend. Desse modo, decidimos representar cada uma das salas por um retângulo criado no TileMap, e associando cada sala ao seu respectivo retângulo no mapa. Desse modo, agora a sala saberia suas próprias coordenadas e poderia interagir com o mapa. <br>
-Agora, com as screens funcionando e as salas integradas ao frontend, buscamos implementar a parte realmente jogável do jogo, ou seja, o spawn de inimigos e os efeitos gerados pelas torres. Desse modo, assim como nas salas, associamos um retângulo para cada inimigo e para cada torre. Vale ressaltar que, usando o Adapter Pattern, pudemos inserir qualquer tipo de inimigo ou torre nas salas, pois são todos retângulos que podem guardar qualquer tipo de torre ou inimigo. <br>
-Na arquitetura inicial, já imaginávamos que as torres gerariam efeitos nas salas e, portanto, implementamos esse sistema, para que as torres inseridas nos respectivos locais gerassem efeitos nas ‘SalaCaminho’ adjacentes a elas. Simultaneamente, implementamos a movimentação dos inimigos pelo mapa, ainda sem tomar dano, de modo que eles conseguissem buscar chegar ao fim do mapa sozinhos. <br>
-Após o funcionamento das torres, efeitos e inimigos, inserimos finalmente a interação das torres com os inimigos. De modo que optamos por deixar que a sala fizesse essa conexão, ou seja, uma sala recebe um efeito de uma torre e contém um inimigo. Desse modo, ela gera o efeito no inimigo enquanto este estiver sob ela. <br>
-Com a implementação funcional de todos os fatores acima, tínhamos apenas uma torre e um inimigo no jogo, de modo que passamos a diversificar o número e variedade de inimigos, torres e ondas. Implementando inimigos mais fortes a cada onda e “chefões” em certos níveis específicos, além de criarmos mais 3 tipos de torres com diferentes poderes e custos. Como usamos o Adapter Pattern, inserir novos monstros ou torres foi especialmente fácil, bastando criar uma classe que estendesse a classe abstrata geral. <br>
-Com o jogo em pleno funcionamento, criamos sistemas mais específicos do jogo, como o funcionamento da tela de pause, correção de tempo de spawn de inimigos para quando o jogador abre o mercado, e inserção de um tutorial, para que o jogador entendesse o funcionamento do jogo.
+O grupo inicialmente planejava montar um jogo que apresentaria, além de um tower defense padrão, um diferencial no qual seriam apresentadas cartas que mudariam aspectos do jogo a cada rodada, por meio de um sorteio. Contudo essa ideia foi descartada devido ao tempo para implementação do jogo, a fim de manter um jogo de tower defense mais simples porém mais consistente 
+	Primeiramente, buscamos montar uma arquitetura para o jogo, para que pudéssemos visualizar uma separação consistente entre o Frontend e o Backend, de modo que pudéssemos trabalhar com ambos separadamente. Contudo, para a implementação do frontend o grupo obteve a maior dificuldade, pois ambos tinham pouquíssimo conhecimento quanto a interfaces gráficas funcionais e interações com o usuário.
+	Buscamos então aprender sobre interfaces gráficas e métodos de implementação das mesmas sob um jogo. Depois de uma longa pesquisa, decidiu-se usar a framework libgdx para cuidar da parte gráfica do jogo de modo a facilitar a implementação do mesmo. Com isso, separamos como frontend a apresentação gráfica e interações no jogo e como backend o funcionamento consistente do jogo e lógicas do sistema em geral.
+	Ambos os membros do grupo buscaram então ler toda a documentação do Libgdx a fim de aprender os métodos, classes e estruturas da framework. Em meio às pesquisas, obtivemos conhecimento do sistema de TiledMap, que poderia se integrar facilmente ao Libgdx a fim de gerar e renderizar mapas de modo mais fácil, logo, facilitando a apresentação do jogo e deixando mais tempo para focarmos na orientação a objetos e lógica do jogo.
+	Iniciamos então a implementação do jogo, aplicando os conceitos básicos do Libgdx e criando as primeiras screens, cameras, batchs, etc. Após isso, iniciamos a criação do mapa do jogo pelo TiledMap, a fim de criar um plano de fundo para cada uma das screens que seriam renderizadas. Assim, criamos toda a parte de visualização básica do jogo, com a construção dos menus e do mapa.
+	Tendo feito isso, partimos para a criação do Backend do jogo, de modo a integrar a parte gráfica feita com o funcionamento, propriamente dito, do jogo. Assim, utilizando nossa arquitetura inicial, criamos e interfaces previstas como Sala, Inimigo e Efeito, e a classe Mapa, implementando seus funcionamentos conforme previsto na arquitetura e mantendo os padrões de encapsulamento que buscamos manter no nosso sistema, ou seja, a estrutura Interface, Classe Abstrata, Classes Herdeiras.
+	Com a implementação da parte básica do Backend, partimos para os primeiros conceitos das nossas lógicas e da integração do Backend com o Frontend. Desse modo, decidimos representar cada uma das salas por um retângulo criado no TileMap, e associando cada sala ao seu respectivo retângulo no mapa. Desse modo, agora a sala saberia suas próprias coordenadas e poderia interagir com o mapa.
+	Agora, com as screens funcionando e as salas integradas ao frontend, buscamos implementar a parte realmente jogável do jogo, ou seja, o spawn de inimigos e os efeitos gerados pelas torres. Desse modo, assim como nas salas, associamos um retângulo para cada inimigo e para cada torre. Vale ressaltar que, usando o Adapter Pattern, pudemos inserir qualquer tipo de inimigo ou torre nas salas, pois são todos retângulos que podem guardar qualquer tipo de torre ou inimigo.
+	Na arquitetura inicial, já imaginávamos que as torres gerariam efeitos nas salas e, portanto, implementamos esse sistema, para que as torres inseridas nos respectivos locais gerassem efeitos nas ‘SalaCaminho’ adjacentes a elas. Simultaneamente, implementamos a movimentação dos inimigos pelo mapa, ainda sem tomar dano, de modo que eles conseguissem buscar chegar ao fim do mapa sozinhos.
+	Após o funcionamento das torres, efeitos e inimigos, inserimos finalmente a interação das torres com os inimigos. De modo que optamos por deixar que a sala fizesse essa conexão, ou seja, uma sala recebe um efeito de uma torre e contém um inimigo. Desse modo, ela gera o efeito no inimigo enquanto este estiver sob ela.
+	Com a implementação funcional de todos os fatores acima, tínhamos apenas uma torre e um inimigo no jogo, de modo que passamos a diversificar o número e variedade de inimigos, torres e ondas. Implementando inimigos mais fortes a cada onda e “chefões” em certos níveis específicos, além de criarmos mais 3 tipos de torres com diferentes poderes e custos. Como usamos o Adapter Pattern, inserir novos monstros ou torres foi especialmente fácil, bastando criar uma classe que estendesse a classe abstrata geral.
+	Com o jogo em pleno funcionamento, criamos sistemas mais específicos do jogo, como o funcionamento da tela de pause, correção de tempo de spawn de inimigos para quando o jogador abre o mercado, e inserção de um tutorial, para que o jogador entendesse o funcionamento do jogo.
 
 # Destaques de Código
 
@@ -181,8 +181,8 @@ for (int i = 0; i < 7; i++) {
 
 # Conclusões e Trabalhos Futuros
 
-Por fim, o grupo concluiu que conseguimos entregar um jogo satisfatório, atendendo quase completamente nossa proposta inicial. Reconhecemos que, dado mais tempo, poderíamos ter dedicado mais à aparência do jogo, deixando certas partes mais bonitas e implementando telas adaptáveis à opção de tela cheia, que é algo que nós aprendemos a fazer mas não tivemos tempo suficiente para implementar. <br>
-Além disso, conforme trabalhávamos com a framework libgdx, adquirimos certos entendimentos e conhecimentos que, caso tivéssemos antes, poderíamos ter deixado nossa arquitetura mais elegante. O principal exemplo disso é o caso da separação entre as partes View e Controller do nosso projeto. Primeiramente, implementamos nossas Screens de modo que elas mesmas são responsáveis por monitorar e controlar as ações do jogador na tela, além do funcionamento geral do jogo, já que essa é a maneira mais simples de implementar uma tela pelo libgdx. Porém, aprendemos posteriormente que é possível criar classes que vão agir como controladores das Screens, e elas é que ficam responsáveis por administrar as ações do usuário e o decorrer do jogo. Desse modo, podemos definir mais claramente e separar melhor a View e o Controller em nossa arquitetura. Porém, ao termos feito essa descoberta, não tínhamos tempo de implementar a mudança, mas esse seria o principal ponto a melhorar para um futuro projeto. <br>
+Por fim, o grupo concluiu que conseguimos entregar um jogo satisfatório, atendendo quase completamente nossa proposta inicial. Reconhecemos que, dado mais tempo, poderíamos ter dedicado mais à aparência do jogo, deixando certas partes mais bonitas e implementando telas adaptáveis à opção de tela cheia, que é algo que nós aprendemos a fazer mas não tivemos tempo suficiente para implementar..
+Além disso, conforme trabalhávamos com a framework libgdx, adquirimos certos entendimentos e conhecimentos que, caso tivéssemos antes, poderíamos ter deixado nossa arquitetura mais elegante. O principal exemplo disso é o caso da separação entre as partes View e Controller do nosso projeto. Primeiramente, implementamos nossas Screens de modo que elas mesmas são responsáveis por monitorar e controlar as ações do jogador na tela, além do funcionamento geral do jogo, já que essa é a maneira mais simples de implementar uma tela pelo libgdx. Porém, aprendemos posteriormente que é possível criar classes que vão agir como controladores das Screens, e elas é que ficam responsáveis por administrar as ações do usuário e o decorrer do jogo. Desse modo, podemos definir mais claramente e separar melhor a View e o Controller em nossa arquitetura. Porém, ao termos feito essa descoberta, não tínhamos tempo de implementar a mudança, mas esse seria o principal ponto a melhorar para um futuro projeto.
 Por fim, gostaríamos também de termos elaborado melhor a parte de tratamento de exceções em nosso projeto. Como essa foi uma das últimas matérias aprendidas em sala, reconhecemos sua importância mas não conseguimos trabalhá-la conforme desejado. Assim, esse seria um ponto crucial de aprimoração em futuros projetos.
 
 
@@ -205,50 +205,12 @@ Observa-se que possuimos 4 componentes independentes que se comunicam por meio d
 
 ## Componente `Salas`
 Representa as salas do jogo, implementando a interface Sala, e com uma classa abstrata SalaBasica representando uma classe geral que será herdada por salas especificas(Caminho, Torre, pedra). Cada sala é responsavel por saber quais itens estão contidos nela (Inimigos, Efeitos e torres).
-
-![Sala](assets/CompSalaBasica.png)
+![Componente](diagrama-componente.png)
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
 Classe |  `com.mygdx.game.Salas.SalaBasica`
 Interfaces | `Sala`
-
-## Componente `Inimigos`
-Representa os inimigos do jogo, implementando a interface Inimigo, e com uma classe abstrata InimigoBasico que pode ser herdado por classes que representam inimigos especificos, cada um com seus respectivos atributos(vida e velocidade) e imagem gráfica
-
-![Inimigos](assets/CompInimigo.png)
-
-**Ficha Técnica**
-item | detalhamento
------ | -----
-Classe | `com.mygdx.game.Inimigos.InimigoBasico`
-Interfaces | `Inimigo`
-
-## Componente `Torres`
-Possui uma interface torre que é implementada por uma classe abstrata TorreBasica que é herdada por classes que representam torres especificas, com seus respectivos 
-efeitos e a imagem gráfica da torre.
-
-![Torre](assets/CompTorre.png)
-
-**Ficha Técnica**
-item | detalhamento
------ | -----
-Classe | `com.mygdx.game.Torre.TorreBasica`
-Interfaces | `Torre`
-
-## Componente `Efeitos`
-Possui uma interface Efeito que é implementada por uma classe abstrata EfeitoBasico que é herdado por classes que representam efeitos especificas, cada um com seu respectivo dano e imagem gráfica do efeito
-
-![Efeitos](assets/CompEfeitos.png)
-
-**Ficha Técnica**
-item | detalhamento
------ | -----
-Classe |  `com.mygdx.game.Efeito.EfeitoBasico`
-Interfaces | `Efeito`
-
-
-
 
 ### Interfaces
 
@@ -256,60 +218,177 @@ Interfaces associadas a esse componente:
 
 ![Diagrama Interfaces](diagrama-interfaces.png)
 
-Interface agregadora do componente em Java:
 
-~~~java
-public interface IDataSet extends ITableProducer, IDataSetProperties {
-}
-~~~
 
 ## Detalhamento das Interfaces
 
-### Interface `<nome da interface>`
+### Interface `Sala`
 
-`<Resumo do papel da interface.>`
+`Interface Responsavel por declarar metodos publicos das salas`
 
-~~~
-<Interface em Java.>
+~~~java
+//Interface contendo todos os métodos de uma Sala que são 'public' (podem ser acessados de fora)
+public interface Sala {
+    //Métodos gerais
+    int getX();
+    int getY();
+    char getTipo();
+    Rectangle getRec();
+    void setRec(Rectangle rec);
+
+    //Métodos SalaCaminho
+    void adicionaEfeito(EfeitoBasico efeito);
+    void removeEfeito(EfeitoBasico efeito);
+    void adicionaInimigo(InimigoBasico inimigo);
+    void removeInimigo(InimigoBasico enemy);
+    void darDano();
+
+    //Métodos SalaTorre
+    TorreBasica getTorre();
+    void setTorre(TorreBasica torre);
+}
 ~~~
 
 Método | Objetivo
 -------| --------
 `<id do método em Java>` | `<objetivo do método e descrição dos parâmetros>`
 
-## Exemplo:
 
-### Interface `ITableProducer`
+## Componente `Inimigos`
+Representa os inimigos do jogo, implementando a interface Inimigo, e com uma classe abstrata InimigoBasico que pode ser herdado por classes que representam inimigos especificos, cada um com seus respectivos atributos(vida e velocidade) e imagem gráfica
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | `com.mygdx.game.Inimigos.InimigoBasico`
+Interfaces | `Inimigo`
 
-Interface provida por qualquer fonte de dados que os forneça na forma de uma tabela.
+### Interfaces
+
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces](diagrama-interfaces.png)
+
+
+## Detalhamento das Interfaces
+
+### Interface `Inimigo`
+
+`Interface Responsavel por declarar metodos publicos dos inimigos`
 
 ~~~java
-public interface ITableProducer {
-  String[] requestAttributes();
-  String[][] requestInstances();
+//Interface contendo todos os métodos de um Inimigo que são 'public' (podem ser acessados de fora)
+public interface Inimigo {
+    //Métodos gerais
+    int getVelocidade();
+    int getGoldDrop();
+    void recebeDano(float dano);
+    boolean morre();
+    Rectangle getRec();
+    void setRec(float x, float y);
+    Texture getImagemInimigo();
+    void create();
 }
 ~~~
 
 Método | Objetivo
 -------| --------
-`requestAttributes` | Retorna um vetor com o nome de todos os atributos (colunas) da tabela.
-`requestInstances` | Retorna uma matriz em que cada linha representa uma instância e cada coluna o valor do respectivo atributo (a ordem dos atributos é a mesma daquela fornecida por `requestAttributes`.
+`<id do método em Java>` | `<objetivo do método e descrição dos parâmetros>`
 
-### Interface `IDataSetProperties`
 
-Define o recurso (usualmente o caminho para um arquivo em disco) que é a fonte de dados.
+## Componente `Torres`
+Possui uma interface torre que é implementada por uma classe abstrata TorreBasica que é herdada por classes que representam torres especificas, com seus respectivos 
+efeitos e a imagem gráfica da torre.
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | `com.mygdx.game.Torre.TorreBasica`
+Interfaces | `Torre`
 
+### Interfaces
+
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces](diagrama-interfaces.png)
+
+## Detalhamento das Interfaces
+
+### Interface `Torre`
+
+`Interface Responsavel por declarar metodos publicos das torres`
 ~~~java
-public interface IDataSetProperties {
-  public String getDataSource();
-  public void setDataSource(String dataSource);
+//Interface contendo todos os métodos de uma Torre que são 'public' (podem ser acessados de fora)
+public interface Torre {
+    //Métodos gerais
+    int getX();
+    int getY();
+    char getTorreTipo();
+    EfeitoBasico getEfeitoTorre();
+    Texture getImagemTorre();
+    void create();
 }
 ~~~
 
 Método | Objetivo
 -------| --------
-`getDataSource` | Retorna o caminho da fonte de dados.
-`setDataSource` | Define o caminho da fonte de dados, informado através do parâmetro `dataSource`.
+`<id do método em Java>` | `<objetivo do método e descrição dos parâmetros>`
+
+## Componente `Efeitos`
+Possui uma interface Efeito que é implementada por uma classe abstrata EfeitoBasico que é herdado por classes que representam efeitos especificas, cada um com seu respectivo dano e imagem gráfica do efeito
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe |  `com.mygdx.game.Efeito.EfeitoBasico`
+Interfaces | `Efeito`
+
+### Interfaces
+
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces](diagrama-interfaces.png)
+
+## Detalhamento das Interfaces
+
+### Interface `Efeito`
+
+`Interface Responsavel por declarar metodos publicos dos efeitos`
+~~~java
+//Interface contendo todos os métodos de um Efeito que são 'public' (podem ser acessados de fora)
+public interface Efeito {
+    //Métodos gerais
+    int getId();
+    float getDano();
+    Texture getImagemEfeito();
+    void create();
+}
+
+~~~
+
+Método | Objetivo
+-------| --------
+`<id do método em Java>` | `<objetivo do método e descrição dos parâmetros>`
+
+## Componente `Screens`
+Possui uma interface Screen que faz parte do framework do libgdx e controla todas as telas do jogo que serão utilizadas pelo game(Renderizador). Possui a GameScreen, MercadoScreen, LoseScreen e WinScreen
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe |  `com.mygdx.game.Screens`
+Interfaces | `Screen`
+
+### Interfaces
+
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces](diagrama-interfaces.png)
+
+## Detalhamento das Interfaces
+
+### Interface `Screen`
+
+`Interface do próprio Framework Ligbdx`
+
+
+
 
 # Plano de Exceções
 
