@@ -188,10 +188,6 @@ Por fim, gostaríamos também de termos elaborado melhor a parte de tratamento d
 
 # Documentação dos Componentes
 
-O vídeo a seguir apresenta um detalhamento de um projeto baseado em componentes:
-
-[![Projeto baseado em Componentes](http://img.youtube.com/vi/1LcSghlin6o/0.jpg)](https://youtu.be/1LcSghlin6o)
-
 # Diagramas
 
 ## Diagrama Geral da Arquitetura do Jogo
