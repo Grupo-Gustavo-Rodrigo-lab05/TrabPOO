@@ -195,13 +195,16 @@ Por fim, gostaríamos também de termos elaborado melhor a parte de tratamento d
 
 
 ## Diagrama Geral de Componentes
-![DiagramaComponentes](assets/DiagramaGeralComponentes.png) <br>
+![DiagramaComponentes](assets/DiagramaGeralComponentes.png)
+
 Observa-se que possuimos 4 componentes independentes que se comunicam por meio de interfaces. A sala interagem com as torres e inimigos, enquanto que apenas a torre sabe o efeito que ela mesmo gera, interagindo com o efeito.
 
 
 ## Componente `Salas`
-Representa as salas do jogo, implementando a interface Sala, e com uma classa abstrata SalaBasica representando uma classe geral que será herdada por salas especificas(Caminho, Torre, pedra). Cada sala é responsavel por saber quais itens estão contidos nela (Inimigos, Efeitos e torres). <br>
-![Sala](assets/CompSalaBasica.png) <br> <br>
+Representa as salas do jogo, implementando a interface Sala, e com uma classa abstrata SalaBasica representando uma classe geral que será herdada por salas especificas(Caminho, Torre, pedra). Cada sala é responsavel por saber quais itens estão contidos nela (Inimigos, Efeitos e torres).
+
+![Sala](assets/CompSalaBasica.png)
+
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
@@ -214,9 +217,7 @@ Interfaces associadas a esse componente:
 
 ![Diagrama Interfaces](diagrama-interfaces.png)
 
-
-
-## Detalhamento das Interfaces
+## Detalhamento da Interface
 
 ### Interface `Sala`
 
@@ -268,7 +269,7 @@ Interfaces associadas a esse componente:
 ![Diagrama Interfaces](diagrama-interfaces.png)
 
 
-## Detalhamento das Interfaces
+## Detalhamento da Interface
 
 ### Interface `Inimigo`
 
@@ -338,6 +339,7 @@ Método | Objetivo
 Possui uma interface Efeito que é implementada por uma classe abstrata EfeitoBasico que é herdado por classes que representam efeitos especificas, cada um com seu respectivo dano e imagem gráfica do efeito
 
 ![Sala](assets/CompEfeitos.png)
+
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
@@ -392,21 +394,14 @@ Interfaces associadas a esse componente:
 `Interface do próprio Framework Ligbdx`
 
 
-
-
 # Plano de Exceções
 
-## Diagrama da hierarquia de exceções
-> Elabore um diagrama com a hierarquia de exceções como detalhado a seguir.
+Como explicado na conclusão, não tivemos tempo para elaborar um sistema de tratamento de exceções em nosso projeto. Os únicos momentos em que usamos exceções foi nos pontos em que precisávamos aplicar um Thread.sleep() no jogo, pois esse método aplica uma InterruptedException se ele detecta que a Thread atual foi interrompida.
+~~~java
+try {
+   Thread.sleep(500);
+} catch (InterruptedException e) {
+   System.out.println(e);
+}
+~~~~
 
-![Hierarquia Exceções](exception-hierarchy.png)
-
-## Descrição das classes de exceção
-
-> Monte uma tabela descritiva seguindo o exemplo:
-
-Classe | Descrição
------ | -----
-DivisaoInvalida | Engloba todas as exceções de divisões não aceitas.
-DivisaoInutil | Indica que a divisão por 1 é inútil.
-DivisaoNaoInteira | Indica uma divisão não inteira.
