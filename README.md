@@ -212,16 +212,13 @@ Classe |  `com.mygdx.game.Salas.SalaBasica`
 Interfaces | `Sala`
 
 ### Interfaces
-
-Interfaces associadas a esse componente:
-
-![Diagrama Interfaces](diagrama-interfaces.png)
+`Sala`
 
 ## Detalhamento da Interface
 
 ### Interface `Sala`
 
-`Interface Responsavel por declarar metodos publicos das salas`
+`Interface Responsável por declarar mátodos públicos das salas`
 
 ~~~java
 //Interface contendo todos os métodos de uma Sala que são 'public' (podem ser acessados de fora)
@@ -248,7 +245,18 @@ public interface Sala {
 
 Método | Objetivo
 -------| --------
-`<id do método em Java>` | `<objetivo do método e descrição dos parâmetros>`
+`getX` | `Retorna a posição X(int) da sala na matriz de salas`
+`getY` | `Retorna a posição Y(int) da sala na matriz de salas`
+`getTipo` | `Retorna um char que representa o tipo da sala`
+`getRec` | `Retorna o retângulo associado a essa sala`
+`setRec` | `Atribui um retângulo à sala`
+`adicionaEfeito` | `Adiciona um objeto do tipo EfeitoBasico à sala`
+`removeEfeito` | `Remove da sala o objeto EfeitoBásico específico passado`
+`adicionaInimigo` | `Adiciona um objeto do tipo InimigoBasico à sala`
+`removeInimigo` | `Remove da sala o objeto InimigoBasico específico passado`
+`darDano` | `Aplica o dano do efeito que está na sala à todos os inimigos nessa sala`
+`getTorre` | `Retorna a TorreBasica que está contida nessa sala`
+`setTorre` | `Atribui uma TorreBasica à sala`
 
 
 ## Componente `Inimigos`
