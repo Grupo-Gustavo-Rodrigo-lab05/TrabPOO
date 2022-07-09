@@ -94,7 +94,7 @@ public class SalaCaminho extends SalaBasica {
 ~~~~
 
 # Destaques de Pattern
-> Os principais Patterns adotados pela equipe foram o Observer Pattern e o Adpater Pattern
+Os principais Patterns adotados pela equipe foram o Observer Pattern e o Adpater Pattern
 
 ## Diagrama do Pattern
 Observer Pattern para salas e inimigos
