@@ -249,7 +249,7 @@ Método | Objetivo
 `getY` | `Retorna a posição Y(int) da sala na matriz de salas`
 `getTipo` | `Retorna um char que representa o tipo da sala`
 `getRec` | `Retorna o retângulo associado a essa sala`
-`setRec` | `Atribui um retângulo à sala`
+`setRec` | `Atribui um retângulo à sala, com posições x e y passadas`
 `adicionaEfeito` | `Adiciona um objeto do tipo EfeitoBasico à sala`
 `removeEfeito` | `Remove da sala o objeto EfeitoBásico específico passado`
 `adicionaInimigo` | `Adiciona um objeto do tipo InimigoBasico à sala`
@@ -271,11 +271,7 @@ Classe | `com.mygdx.game.Inimigos.InimigoBasico`
 Interfaces | `Inimigo`
 
 ### Interfaces
-
-Interfaces associadas a esse componente:
-
-![Diagrama Interfaces](diagrama-interfaces.png)
-
+`Inimigo`
 
 ## Detalhamento da Interface
 
@@ -300,8 +296,14 @@ public interface Inimigo {
 
 Método | Objetivo
 -------| --------
-`<id do método em Java>` | `<objetivo do método e descrição dos parâmetros>`
-
+`getVelocidade` | `Retorna um valor inteiro que representa a velociade desse inimigo`
+`getGoldDrop` | `Retorna um valor inteiro que representa a quantidade de ouro que esse inimigo dá ao morrer`
+`recebeDano` | `Subtrai da vida do inimigo o valor em float passado`
+`morre` | `Retorna true caso a vida do inimigo seja menor que zero, e false caso contrário`
+`getRec` | `Retorna o retângulo associado a esse inimigo`
+`setRec` | `Atribui um retângulo ao inimigo, com posições x e y passadas`
+`getImagemInimigo` | `Retorna um objeto do tipo Texture com a imagem do inimigo`
+`create` | `Cria o objeto Texture com o caminho da imagem do inimigo`
 
 ## Componente `Torres`
 Possui uma interface torre que é implementada por uma classe abstrata TorreBasica que é herdada por classes que representam torres especificas, com seus respectivos 
@@ -316,10 +318,7 @@ Classe | `com.mygdx.game.Torre.TorreBasica`
 Interfaces | `Torre`
 
 ### Interfaces
-
-Interfaces associadas a esse componente:
-
-![Diagrama Interfaces](diagrama-interfaces.png)
+`Torre`
 
 ## Detalhamento da Interface
 
@@ -341,7 +340,12 @@ public interface Torre {
 
 Método | Objetivo
 -------| --------
-`<id do método em Java>` | `<objetivo do método e descrição dos parâmetros>`
+`getX` | `Retorna a posição X(int) da torre na matriz de salas`
+`getY` | `Retorna a posição Y(int) da torre na matriz de salas`
+`getTorreTipo` | `Retorna um char que representa o tipo da torre (Fogo, Gelo, etc)`
+`getEfeitoTorre` | `Retorna o objeto EfeitoBasico contido nessa torre`
+`getImagemTorre` | `Retorna um objeto do tipo Texture com a imagem da torre`
+`create` | `Cria o objeto Texture com o caminho da imagem da torre`
 
 ## Componente `Efeitos`
 Possui uma interface Efeito que é implementada por uma classe abstrata EfeitoBasico que é herdado por classes que representam efeitos especificas, cada um com seu respectivo dano e imagem gráfica do efeito
@@ -355,10 +359,7 @@ Classe |  `com.mygdx.game.Efeito.EfeitoBasico`
 Interfaces | `Efeito`
 
 ### Interfaces
-
-Interfaces associadas a esse componente:
-
-![Diagrama Interfaces](diagrama-interfaces.png)
+`Efeito`
 
 ## Detalhamento da Interface
 
@@ -379,7 +380,10 @@ public interface Efeito {
 
 Método | Objetivo
 -------| --------
-`<id do método em Java>` | `<objetivo do método e descrição dos parâmetros>`
+`<getId>` | `Retorna um valor inteiro que representa o tipo desse efeito`
+`<getDano>` | `Retorna um valor float que representa o dano desse efeito`
+`getImagemTorre` | `Retorna um objeto do tipo Texture com a imagem do efeito`
+`create` | `Cria o objeto Texture com o caminho da imagem do efeito`
 
 ## Componente `Screens`
 Possui uma interface Screen que faz parte do framework do libgdx e controla todas as telas do jogo que serão utilizadas pelo game(Renderizador). Possui a GameScreen, MercadoScreen, LoseScreen e WinScreen
@@ -390,10 +394,7 @@ Classe |  `com.mygdx.game.Screens`
 Interfaces | `Screen`
 
 ### Interfaces
-
-Interfaces associadas a esse componente:
-
-![Diagrama Interfaces](diagrama-interfaces.png)
+`Screen`
 
 ## Detalhamento da Interface
 
