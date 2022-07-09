@@ -197,44 +197,48 @@ O vídeo a seguir apresenta um detalhamento de um projeto baseado em componentes
 ## Diagrama Geral da Arquitetura do Jogo
 ![arquitetura](assets/Arquitetura.png)
 
-> Observa-se que possuimos 4 componentes independentes que se comunicam por meio de interfaces. A sala interagem com as torres e inimigos, enquanto que apenas a torre sabe o efeito que ela mesmo gera, interagindo com o efeito.
 
 ## Diagrama Geral de Componentes
 ![DiagramaComponentes](assets/DiagramaGeralComponentes.png)
-> Se você adotou componentes de software, apresente a documentação de componentes conforme o modelo.
+Observa-se que possuimos 4 componentes independentes que se comunicam por meio de interfaces. A sala interagem com as torres e inimigos, enquanto que apenas a torre sabe o efeito que ela mesmo gera, interagindo com o efeito.
 
-### Exemplo 1
 
-Este é o diagrama compondo componentes para análise:
-
-![Diagrama Analise](diagrama-componentes-analise.png)
-
-### Exemplo 2
-
-Este é um diagrama inicial do projeto de jogos:
-
-![Diagrama Jogos](diagrama-componentes-jogos.png)
-
-### Exemplo 3
-
-Este é outro diagrama de um projeto de vendas:
-
-![Diagrama Vendas](diagrama-componentes-vendas.png)
-
-Para cada componente será apresentado um documento conforme o modelo a seguir:
-
-## Componente `<Nome do Componente>`
-
-> Resumo do papel do componente e serviços que ele oferece.
-
+## Componente `Salas`
+Representa as salas do jogo, implementando a interface Sala, e com uma classa abstrata SalaBasica representando uma classe geral que será herdada por salas especificas(Caminho, Torre, pedra). Cada sala é responsavel por saber quais itens estão contidos nela (Inimigos, Efeitos e torres).
 ![Componente](diagrama-componente.png)
-
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | `<caminho completo da classe com pacotes>` <br> Exemplo: `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
-Autores | `<nome dos membros que criaram o componente>`
-Interfaces | `<listagem das interfaces do componente>`
+Classe |  `com.mygdx.game.Salas.SalaBasica`
+Interfaces | `Sala`
+
+## Componente `Inimigos`
+Representa os inimigos do jogo, implementando a interface Inimigo, e com uma classe abstrata InimigoBasico que pode ser herdado por classes que representam inimigos especificos, cada um com seus respectivos atributos(vida e velocidade) e imagem gráfica
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | `com.mygdx.game.Inimigos.InimigoBasico`
+Interfaces | `Inimigo`
+
+## Componente `Torres`
+Possui uma interface torre que é implementada por uma classe abstrata TorreBasica que é herdada por classes que representam torres especificas, com seus respectivos 
+efeitos e a imagem gráfica da torre.
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | `com.mygdx.game.Torre.TorreBasica`
+Interfaces | `Torre`
+
+## Componente `Efeitos`
+Possui uma interface Efeito que é implementada por uma classe abstrata EfeitoBasico que é herdado por classes que representam efeitos especificas, cada um com seu respectivo dano e imagem gráfica do efeito
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe |  `com.mygdx.game.Efeito.EfeitoBasico`
+Interfaces | `Efeito`
+
+
+
 
 ### Interfaces
 
