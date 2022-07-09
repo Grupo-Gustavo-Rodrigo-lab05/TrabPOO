@@ -109,7 +109,7 @@ Adapter Pattern Inimigos
 Adapter Pattern torres
 ![Adapter1](assets/PatternAdapterTorres.png)
 ## Código do Pattern
-> Código do Observer Pattern para dar dano nos inimigos - A gameScreen fica o tempo todo verificando a posição dos inimigos vs a posição das salas. Caso ocorra sobreposição ela chama o método darDano da sala e dá dano nos inimigos.
+Código do Observer Pattern para dar dano nos inimigos - A gameScreen fica o tempo todo verificando a posição dos inimigos vs a posição das salas. Caso ocorra sobreposição ela chama o método darDano da sala e dá dano nos inimigos.
 ~~~java
 for (int linha = 0; linha < 7; linha ++) {
             for (int coluna = 0; coluna < 5; coluna++) {
@@ -133,7 +133,7 @@ for (int linha = 0; linha < 7; linha ++) {
             }
         }
 ~~~
-> Codigo do Observer Pattern para torres - A GameScreen Verifica o tempo todo a torre que está contida naquela sala e aplica os efeitos decorrentes dessa torre.
+Codigo do Observer Pattern para torres - A GameScreen Verifica o tempo todo a torre que está contida naquela sala e aplica os efeitos decorrentes dessa torre.
 ~~~java
 for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 5; j++) {
@@ -149,7 +149,7 @@ for (int i = 0; i < 7; i++) {
                         }
                         ...
 ~~~
-> Código do Adapter Inimigos - Note que primeiro declaramos o Rectangle, e depois aplicamos a ele determinado inimigo especifico, sendo que qualquer inimigo pode se adaptar a ele.
+Código do Adapter Inimigos - Note que primeiro declaramos o Rectangle, e depois aplicamos a ele determinado inimigo especifico, sendo que qualquer inimigo pode se adaptar a ele.
 ~~~java
 for (MapObject object : tiledMap.getLayers().get("Spawn").getObjects()) {
                 Rectangle Spawn = ((RectangleMapObject) object).getRectangle();
@@ -168,7 +168,7 @@ for (MapObject object : tiledMap.getLayers().get("Spawn").getObjects()) {
                     enemy = new InimigoEsqueleto();
 ~~~
 
->Código do Adapter Torres - Note que cada sala se associa a um Rectangle, e qualquer torre pode se adaptar nesse Rectangle, dependendo apenas da torre que está contidade dentro da sala
+Código do Adapter Torres - Note que cada sala se associa a um Rectangle, e qualquer torre pode se adaptar nesse Rectangle, dependendo apenas da torre que está contidade dentro da sala
 ~~~java
 for (int i = 0; i < 7; i++) {
                 for (int j = 0; j < 5; j++) {
