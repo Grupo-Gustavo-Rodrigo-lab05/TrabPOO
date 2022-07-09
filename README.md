@@ -380,8 +380,8 @@ public interface Efeito {
 
 Método | Objetivo
 -------| --------
-`<getId>` | `Retorna um valor inteiro que representa o tipo desse efeito`
-`<getDano>` | `Retorna um valor float que representa o dano desse efeito`
+`getId` | `Retorna um valor inteiro que representa o tipo desse efeito`
+`getDano` | `Retorna um valor float que representa o dano desse efeito`
 `getImagemTorre` | `Retorna um objeto do tipo Texture com a imagem do efeito`
 `create` | `Cria o objeto Texture com o caminho da imagem do efeito`
 
