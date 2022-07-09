@@ -38,13 +38,73 @@ O grupo inicialmente planejava montar um jogo que apresentaria, além de um towe
 
 # Destaques de Código
 
-> Escolha trechos relevantes e/ou de destaque do seu código. Apresente um recorte (você pode usar reticências para remover partes menos importantes). Veja como foi usado o highlight de Java para o código.
-
+Implementação do Pause no jogo na classe GameScreen
 ~~~java
-// Recorte do seu código
-public void algoInteressante(…) {
-   …
-   trechoInteressante = 100;
+//Administra o estado do jogo (Pause)
+if(paused) {
+    batch.draw(pauseImg, 512, 512);
+    if(!tutorial) {
+	if (Gdx.input.isKeyJustPressed(Input.Keys.P) || fechouMercado) {
+	    timePausedDelay = TimeUtils.nanoTime() - instantPaused;
+	    paused = false;
+	    fechouMercado = false;
+	}
+    }
+    else{
+    ...
+    }
+}
+else {
+    generalUpdate();
+}
+~~~
+~~~java
+//Pausa o jogo quando o usuário aperta 'P'
+if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
+    instantPaused = TimeUtils.nanoTime();
+    paused = true;
+}
+~~~
+
+O tempo marcado quando o jogo é pausado serve para compensar quando calculamos o intervalo de spawn de inimigos
+~~~java
+//Spawn de inimigos
+if ((TimeUtils.nanoTime() - timePausedDelay) - lastDropTime > 1000000000 && !trocouOnda) {
+    spawnEnemies();
+    timePausedDelay = 0;
+}
+~~~
+
+Fim do jogo no caso de derrota
+~~~java
+//Termina o jogo se um inimigo chegou no tesouro
+for (Iterator<InimigoBasico> it = enemies.iterator(); it.hasNext();) {
+    InimigoBasico enemy = it.next();
+    if(enemy.getRec().y < 130 && enemy.getRec().x > 380) {
+	try {
+	    Thread.sleep(500);
+	} catch (InterruptedException e) {
+	    System.out.println(e);
+	}
+	game.setScreen(new LoseScreen(game, mapa));
+    }
+}
+~~~
+
+Inimigos da próxima onda só aparecem quando o último inimigo da última onda morre, e fim do jogo no caso de vitória
+~~~java
+//Retoma o spawn de inimigos quando o último inimigo da última onda morre
+if (enemies.isEmpty() && !tutorial) {
+    ondasI++;
+    trocouOnda = false;
+    if (ondasI == 10) { //Se o último boss morreu vence o jogo
+	try {
+	    Thread.sleep(1000);
+	} catch (InterruptedException e) {
+	    System.out.println(e);
+	}
+	game.setScreen(new WinScreen(game, mapa));
+    }
 }
 ~~~
 
